@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 5000;
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const Hod = require("../Backend/Models/Hod");
@@ -15,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const PORT = process.env.PORT || 5000;
 // submit endpoint when user fills the form for leave
 app.post("/submit", async (req, res) => {
   try {

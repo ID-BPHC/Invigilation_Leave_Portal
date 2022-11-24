@@ -16,14 +16,14 @@ function Signin() {
 
   useEffect(() => {
     setValue(localStorage.getItem("displayName"));
-  });
+  }, []);
   return (
     <div>
       {value ? (
         <Form />
       ) : (<>
         <header>
-          <img className="header-img" src={require('../img/tdlogo-01.png')}></img>
+          <img className="header-img" alt="TD-Logo" src={require('../img/tdlogo-01.png')}></img>
         </header>
         <div className="text-center justify-center m-auto login">
           <h2 className=" lg:text-5xl md:text-4xl m-20">Welcome to Time Table Division's Leave Portal</h2>
