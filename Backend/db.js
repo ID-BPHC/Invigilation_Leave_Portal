@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const mongoURI = "mongodb+srv://td:td@cluster0.yhitu.mongodb.net/TDLeave?retryWrites=true&w=majority"
+require('dotenv').config()
+
+const mongoURI = process.env.MONGO_URI
 
 
 const connectToMongo = ()=>{
