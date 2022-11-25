@@ -33,6 +33,7 @@ const phdSchema = new mongoose.Schema({
     date:{
         type:Array,
         required:true,
+        unique:true,
     },
     leave:{
         type:Boolean,
