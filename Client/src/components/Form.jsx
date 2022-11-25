@@ -66,8 +66,8 @@ export default function Form() {
     );
     
     alert('Email sent successfully!');
-    // localStorage.clear();
-    // window.location.reload();
+    localStorage.clear();
+    window.location.reload();
 
   };
 
@@ -195,6 +195,7 @@ export default function Form() {
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button
+            type="button"
               className="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full"
               onClick={logout}
             >

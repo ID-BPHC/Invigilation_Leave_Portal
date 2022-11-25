@@ -24,7 +24,6 @@ const phdSchema = new mongoose.Schema({
     emailId:{
         type:String,
         required:true,
-        unique:true,
     },
     reason:{
         type:String,
@@ -33,7 +32,6 @@ const phdSchema = new mongoose.Schema({
     date:{
         type:Array,
         required:true,
-        unique:true,
     },
     leave:{
         type:Boolean,
