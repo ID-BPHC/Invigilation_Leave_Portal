@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { HOD_Data } from "./HOD_Data";
 
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
@@ -99,58 +100,17 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(dept, name, request) {
-  return { dept, name, request };
+function createData(dept, name, request, from_to) {
+  return { dept, name, request, from_to };
 }
 
-// Demo data, get data dynamically later
+// Dummy data, get data dynamically later
 const rows = [
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
-  createData("ECE", "Shobhan", "Sick Leave"),
+  createData("ECE", "Shobhan", "Sick Leave", "1-1-23 to 3-1-23"),
 ];
 
 function Dashboard() {
-  const options = [
-    { value: "", text: "-- Select Dept --" },
-    { value: "Civil Engg", text: "Civil Engg" },
-    { value: "Chemical Engg", text: "Chemical Engg" },
-    { value: "EEE", text: "EEE" },
-    { value: "Mechanical Engg", text: "Mechanical Engg" },
-    { value: "Pharmacy", text: "Pharmacy" },
-    { value: "Computer Sciences", text: "Computer Sciences" },
-    { value: "ENI", text: "ENI" },
-    { value: "ECE", text: "ECE" },
-    { value: "Biological Sciences", text: "Biological Sciences" },
-    { value: "Chemistry", text: "Chemistry" },
-    { value: "Economics", text: "Economics" },
-    { value: "Physics", text: "Physics" },
-    { value: "Maths", text: "Maths" },
-  ];
+
   const [selector, setSelector] = useState("");
 
   const [page, setPage] = React.useState(0);
@@ -176,26 +136,26 @@ function Dashboard() {
       </div>
 
       {/* Filter Search for Admin */}
-      <div className="flex flex-row text-center items-center mx-auto ">
+      { localStorage.getItem('email') === HOD_Data[0].value && <div className="flex flex-row text-center items-center mx-auto ">
         {" "}
-        {/* TODO: Only Admin should see this */}
-        <h3 className="mx-4">Sort By: </h3>
+        <h3 className="mx-4">Sorted By: </h3>
         <select
-          defaultValue={options[0].value}
+          defaultValue={HOD_Data[0].value}
           value={selector}
-          className="text-center items-center h-auto flex my-5 bg-slate-300 p-4 rounded-xl right-0"
+          className="text-center items-center w-40 overflow-auto flex my-5 bg-slate-300 p-4 rounded-xl right-0 flex-grow-0"
           required
           onChange={(e) => {
             setSelector(e.target.text);
           }}
         >
-          {options.map((option) => (
+          {HOD_Data.map((option) => (
             <option key={option.value} value={option.value}>
               {option.text}
             </option>
           ))}
         </select>
-      </div>
+      </div>}
+      
 
       {/* Table */}
       <div>
@@ -203,10 +163,10 @@ function Dashboard() {
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <StyledTableCell align="center">#</StyledTableCell>
                 <StyledTableCell align="center">Department</StyledTableCell>
                 <StyledTableCell align="center">Requested By</StyledTableCell>
                 <StyledTableCell align="center">Reason</StyledTableCell>
+                <StyledTableCell align="center">Leave Dates</StyledTableCell>
                 <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -217,11 +177,9 @@ function Dashboard() {
                     page * rowsPerPage + rowsPerPage
                   )
                 : rows
-              ).map((row, index) => (
+              ).map((row) => (
                 <TableRow>
-                  <TableCell component="th" scope="row" align="center">
-                    {index + 1}
-                  </TableCell>
+
                   <TableCell component="th" scope="row" align="center">
                     {row.dept}
                   </TableCell>
@@ -231,14 +189,17 @@ function Dashboard() {
                   <TableCell component="th" scope="row" align="center">
                     {row.request}
                   </TableCell>
+                  <TableCell component="th" scope="row" align="center">
+                    {row.from_to}
+                  </TableCell>
                   <TableCell
                     component="th"
                     scope="row"
                     align="center"
                   >
-                    <div className="flex flex-row right-0">
-                      <button className="mx-4 hover:bg-green-400">Approve</button>
-                      <button className="mx-4 hover:bg-red-400">Deny</button>
+                    <div className="flex flex-row items-center justify-center">
+                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md">Approve</button>
+                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md">Deny</button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -254,7 +215,7 @@ function Dashboard() {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  colSpan={3}
+                  colSpan={4}
                   count={rows.length}
                   rowsPerPage={rowsPerPage}
                   page={page}

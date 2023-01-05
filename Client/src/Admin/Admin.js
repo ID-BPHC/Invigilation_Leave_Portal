@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import Dashboard from "./Dashboard";
 
 function Admin() {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("Dashboard");
   const [hodDept, setHodDept] = useState("")
   return (
     <div>

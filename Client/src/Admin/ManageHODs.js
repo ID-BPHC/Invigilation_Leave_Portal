@@ -1,28 +1,14 @@
 import React, { useState } from "react";
+import { HOD_Data } from "./HOD_Data";
 
 function ManageHODs({ hodDept, setHodDept }) {
-  const options = [
-    { value: "", text: "-- Select Dept --" },
-    { value: "Civil Engg", text: "Civil Engg" },
-    { value: "Chemical Engg", text: "Chemical Engg" },
-    { value: "EEE", text: "EEE" },
-    { value: "Mechanical Engg", text: "Mechanical Engg" },
-    { value: "Pharmacy", text: "Pharmacy" },
-    { value: "Computer Sciences", text: "Computer Sciences" },
-    { value: "ENI", text: "ENI" },
-    { value: "ECE", text: "ECE" },
-    { value: "Biological Sciences", text: "Biological Sciences" },
-    { value: "Chemistry", text: "Chemistry" },
-    { value: "Economics", text: "Economics" },
-    { value: "Physics", text: "Physics" },
-    { value: "Maths", text: "Maths" },
-  ];
+
   const [selector, setSelector] = useState("");
 
   return (
     <div className="my-5 py-2 text-center items-center">
       <div className="text-center text-3xl m-auto text-black my-5 py-2">
-        ManageHODs
+        Manage HODs
       </div>
       <div className="text-center items-center mx-auto">
         <form
@@ -30,7 +16,7 @@ function ManageHODs({ hodDept, setHodDept }) {
           className="text-center items-center mx-auto flex flex-col my-4"
         >
           <select
-            defaultValue={options[0].value}
+            defaultValue={HOD_Data[0].value}
             value={selector}
             className="text-center items-center h-auto bg-slate-300 p-4 m-auto rounded-xl"
             required
@@ -40,7 +26,7 @@ function ManageHODs({ hodDept, setHodDept }) {
               // console.log(hodDept);
             }}
           >
-            {options.map((option) => (
+            {HOD_Data.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.text}
               </option>
@@ -53,7 +39,7 @@ function ManageHODs({ hodDept, setHodDept }) {
             required
             className="mx-4 h-12 rounded-md w-1/4 p-4 text-center border"
           />
-          <button className="my-6 hover:bg-yellow-200">Submit</button>
+          <button className="my-6 hover:bg-yellow-200 px-4 py-3 border-black border-2 rounded-3xl ">Submit</button>
         </form>
       </div>
     </div>
