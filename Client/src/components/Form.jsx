@@ -79,7 +79,7 @@ export default function Form() {
   return (
     <div
       id="main-form"
-      className="justify-center text-center bg-no-repeat w-full position: absolute"
+      className="justify-center text-center bg-no-repeat w-full absolute"
     >
       <image src={require("../img/tdlogo-01.png")} alt="img" width="100px" />
       <div id="form-fields">
@@ -123,7 +123,7 @@ export default function Form() {
               selectDateType="multiple"
               showDateInputField={false}
               minDate="2022-12-16"
-              maxDate="2022-12-31"
+              maxDate="2023-12-31"
             />
           ) : null}
           </div>
@@ -186,17 +186,17 @@ export default function Form() {
               <option>Physics</option>
             </select>
           </div>
-          <div className="flex flex-row justify-center align-middle text-center">
+          <div className="flex flex-row justify-center align-middle text-center my-5">
             <button
               type="submit"
-              className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full"
+              className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full my-[5%]"
             >
               Submit for Approval
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button
             type="button"
-              className="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full"
+              className="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full my-[5%]"
               onClick={logout}
             >
               Logout
