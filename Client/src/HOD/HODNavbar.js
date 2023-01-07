@@ -1,20 +1,14 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import ManageHODs from "./ManageHODs";
 
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Manage HODs", href: "#", current: false },
-  { name: "Display HODs", href: "#", current: false },
-];
+const navigation = [{ name: "Dashboard", href: "#", current: true }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({setSelected}) {
-
+export default function HODNavbar() {
   const logout = () => {
     localStorage.clear();
     window.location.reload();
@@ -48,14 +42,8 @@ export default function Example({setSelected}) {
 
                 <div className="items-center text-center my-auto px-3 hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('Dashboard')}>
+                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">
                       Dashboard
-                    </a>
-                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('ManageHODs')}>
-                      Manage HODs
-                    </a>
-                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('Display HODs')}>
-                      Display HODs
                     </a>
                   </div>
                 </div>
@@ -68,7 +56,10 @@ export default function Example({setSelected}) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={localStorage.getItem("photoURL") || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                        src={
+                          localStorage.getItem("photoURL") ||
+                          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        }
                         alt="pfp"
                       />
                     </Menu.Button>

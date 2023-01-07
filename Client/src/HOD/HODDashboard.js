@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HOD_Data } from "./HOD_Data";
+import { HOD_Data } from "../Admin/HOD_Data";
 
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
@@ -32,9 +32,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-function TablePaginationActions(props) {
+function TablePaginationActions({ count, page, rowsPerPage, onPageChange }) {
   const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
 
   const handleFirstPageButtonClick = (event) => {
     onPageChange(event, 0);
@@ -101,27 +100,29 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function Dashboard() {
+function Dashboard({ department }) {
+  const [rows, setRows] = useState([]);
 
-  const[rows,setRows] = useState([]);
-
-  useEffect(()=>{
-    async function getListOfPhds(){
-      var response = await fetch("http://127.0.0.1:5000/admin/phdApproved",{
-        method: "GET",
+  useEffect(() => {
+    async function getListOfPhds() {
+      var response = await fetch("http://127.0.0.1:5000/hod/phdApproved", {
+        method: "POST",
         mode: "cors",
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          department: department,
+        }),
       });
       response = await response.json();
       setRows(response);
     }
     getListOfPhds();
-  },[]);
-  
+  }, [department]);
+
   const [selector, setSelector] = useState("");
 
   const [page, setPage] = React.useState(0);
@@ -147,26 +148,27 @@ function Dashboard() {
       </div>
 
       {/* Filter Search for Admin */}
-      { localStorage.getItem('email') === HOD_Data[0].value && <div className="flex flex-row text-center items-center mx-auto ">
-        {" "}
-        <h3 className="mx-4">Sorted By: </h3>
-        <select
-          defaultValue={HOD_Data[0].value}
-          value={selector}
-          className="text-center items-center w-40 overflow-auto flex my-5 bg-slate-300 p-4 rounded-xl right-0 flex-grow-0"
-          required
-          onChange={(e) => {
-            setSelector(e.target.text);
-          }}
-        >
-          {HOD_Data.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.text}
-            </option>
-          ))}
-        </select>
-      </div>}
-      
+      {localStorage.getItem("email") === HOD_Data[0].value && (
+        <div className="flex flex-row text-center items-center mx-auto ">
+          {" "}
+          <h3 className="mx-4">Sorted By: </h3>
+          <select
+            defaultValue={HOD_Data[0].value}
+            value={selector}
+            className="text-center items-center w-40 overflow-auto flex my-5 bg-slate-300 p-4 rounded-xl right-0 flex-grow-0"
+            required
+            onChange={(e) => {
+              setSelector(e.target.text);
+            }}
+          >
+            {HOD_Data.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.text}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Table */}
       <div>
@@ -190,7 +192,6 @@ function Dashboard() {
                 : rows
               ).map((row) => (
                 <TableRow>
-
                   <TableCell component="th" scope="row" align="center">
                     {row.department}
                   </TableCell>
@@ -203,14 +204,14 @@ function Dashboard() {
                   <TableCell component="th" scope="row" align="center">
                     {row.date}
                   </TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    align="center"
-                  >
+                  <TableCell component="th" scope="row" align="center">
                     <div className="flex flex-row items-center justify-center">
-                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md">Approve</button>
-                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md">Deny</button>
+                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md">
+                        Approve
+                      </button>
+                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md">
+                        Deny
+                      </button>
                     </div>
                   </TableCell>
                 </TableRow>

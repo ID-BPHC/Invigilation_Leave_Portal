@@ -4,6 +4,7 @@ import { signInWithPopup } from "firebase/auth";
 import Form from "../components/Form";
 import { HOD_Data } from "../Admin/HOD_Data";
 import Admin from "../Admin/Admin";
+import HOD from "../HOD/HOD";
 // import "./signin.css";
 
 function Signin() {
@@ -21,12 +22,19 @@ function Signin() {
     setValue(localStorage.getItem("email"));
   }, []);
   // console.log(value)
-  
   return (
     <div>
       {value ? (
-        HOD_Data.some((i) => i.hod === value) ? (   // needs fix
+        // TODO: Change email to td email
+        value === "f2021781@hyderabad.bits-pilani.ac.in" ? (
           <Admin />
+        ) : HOD_Data.some((i) => i.hod.some((j) => j === value)) ? ( // needs fix
+          <HOD
+            department={
+              HOD_Data.filter((hod) => hod.hod.some((j) => j === value))[0]
+                .value
+            }
+          />
         ) : (
           <Form />
         )
