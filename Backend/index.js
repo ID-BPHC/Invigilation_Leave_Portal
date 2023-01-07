@@ -9,7 +9,7 @@ const path = require("path");
 const cors = require("cors");
 const connectToMongo = require("../Backend/db");
 connectToMongo();
-require('dotenv').config()
+require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,7 +60,10 @@ app.post("/submit", async (req, res) => {
     let hod = await Hod.findOne({ department: branch });
     console.log(hod);
 
-    let hodEmail = hod.email ? hod.email : 'td@hyderabad.bits-pilani.ac.in';
+    // let hodEmail =
+    //   hod !== undefined && hod.email !== undefined
+    //     ? hod.email
+    //     : "td@hyderabad.bits-pilani.ac.in";
 
     let mailOptions = {
       from: "",
@@ -73,7 +76,7 @@ app.post("/submit", async (req, res) => {
         branch,
         reason,
         newDates,
-        url: process.env.BASEURL
+        url: process.env.BASEURL,
       },
       template: "index",
     };
@@ -96,6 +99,7 @@ app.post("/submit", async (req, res) => {
       reason: req.body.reason,
       date: req.body.multipleDate,
     });
+    console.log(phD);
     res.redirect("http://localhost:3000");
   } catch (error) {
     console.log(error);
@@ -118,7 +122,9 @@ app.post("/reply", async (req, res) => {
           }
         }
       );
-      res.send("You Have Accepted the leave. If you want to modify your request, you can hit reject/accept in the same mail again");
+      res.send(
+        "You Have Accepted the leave. If you want to modify your request, you can hit reject/accept in the same mail again"
+      );
     } else {
       Phd.findOneAndUpdate(
         { emailId: email },
@@ -130,8 +136,26 @@ app.post("/reply", async (req, res) => {
           }
         }
       );
-      res.send("You Have Rejected the leave. If you want to modify your request, you can hit reject/accept in the same mail again");
+      res.send(
+        "You Have Rejected the leave. If you want to modify your request, you can hit reject/accept in the same mail again"
+      );
     }
+  } catch (err) {
+    console.log(error);
+    res.send("Internal Server Error Occured");
+  }
+});
+
+// hod endpoint to get list of all phd students from their department who's request has been approved
+app.post("/hod/phdApproved", (req, res) => {
+  try {
+    Phd.find({ leave: true, department: req.body.department }, (err, phds) => {
+      if (err) {
+        console.log("error in finding the list of phds with approved request");
+        return;
+      }
+      return res.send(phds);
+    });
   } catch (err) {
     console.log(error);
     res.send("Internal Server Error Occured");
@@ -140,14 +164,14 @@ app.post("/reply", async (req, res) => {
 
 // admin endpoint to get list of all hods
 app.get("/admin/getAllHods", (req, res) => {
-  try{
+  try {
     Hod.find({}, (err, hods) => {
       if (err) {
         console.log("error in finding list of all hods");
       }
       return res.send(hods);
-    })
-  }catch(err){
+    });
+  } catch (err) {
     console.log(error);
     res.send("Internal Server Error Occured");
   }
@@ -155,58 +179,64 @@ app.get("/admin/getAllHods", (req, res) => {
 
 // admin endpoint to get list of all phd students who's request has been approved
 app.get("/admin/phdApproved", (req, res) => {
-  try{
+  try {
     Phd.find({ leave: true }, (err, phds) => {
       if (err) {
         console.log("error in finding the list of phds with approved request");
         return;
       }
       return res.send(phds);
-    })
-  }catch(err){
+    });
+  } catch (err) {
     console.log(error);
     res.send("Internal Server Error Occured");
   }
 });
 
 // admin endpoint to replace the previous hod
-app.post("/admin/changeHod",(req, res) => {
-  try{
-    const{nameOfNewHod,deptOfNewHod,hpsrnOfNewHod,emailOfNewHod} = req.body;
+app.post("/admin/changeHod", async (req, res) => {
+  try {
+    const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
+      req.body;
     console.log(req.body);
-    Hod.findOneAndUpdate({department:deptOfNewHod},{
-        name:nameOfNewHod,
-        department:deptOfNewHod,
-        hpsrn:hpsrnOfNewHod,
-        email:emailOfNewHod},(err,oldHod)=>{
-          if(err){
-            console.log(err);
-            return res.send(false);
-          }
-          else{
-            return res.send(true);
-          }
+    Hod.findOneAndUpdate(
+      { department: deptOfNewHod },
+      {
+        name: nameOfNewHod,
+        department: deptOfNewHod,
+        hpsrn: hpsrnOfNewHod,
+        email: emailOfNewHod,
+      },
+      (err, oldHod) => {
+        if (err) {
+          console.log(err);
+          return res.send(false);
+        } else {
+          return res.send(true);
         }
+      }
     );
-  }catch(err){
+  } catch (err) {
     console.log(err);
     res.send("Internal Server Error Occured");
   }
 });
 
 // admin endpoint to add the new hod to db
-app.post("/admin/addHod",(req, res) => {
-  try{
-    const{nameOfNewHod,deptOfNewHod,hpsrnOfNewHod,emailOfNewHod} = req.body;
+app.post("/admin/addHod", (req, res) => {
+  try {
+    const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
+      req.body;
     console.log(req.body);
     let hod = Hod.create({
-        name:nameOfNewHod,
-        department:deptOfNewHod,
-        hpsrn:hpsrnOfNewHod,
-        email:emailOfNewHod});
+      name: nameOfNewHod,
+      department: deptOfNewHod,
+      hpsrn: hpsrnOfNewHod,
+      email: emailOfNewHod,
+    });
     console.log(hod);
     return res.send(true);
-  }catch(err){
+  } catch (err) {
     console.log(err);
     res.send("Internal Server Error Occured");
     return res.send(false);
