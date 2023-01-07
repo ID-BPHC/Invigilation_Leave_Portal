@@ -101,13 +101,14 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function Dashboard() {
+function DisplayHODs() {
 
   const[rows,setRows] = useState([]);
+  const sortedRows = [];
 
   useEffect(()=>{
     async function getListOfPhds(){
-      var response = await fetch("http://127.0.0.1:5000/admin/phdApproved",{
+      var response = await fetch("http://127.0.0.1:5000/admin/getAllHods",{
         method: "GET",
         mode: "cors",
         cache: "no-cache",
@@ -117,7 +118,117 @@ function Dashboard() {
         },
       });
       response = await response.json();
-      setRows(response);
+      for(let i=0;i<response.length;i++){
+          if(response[i].department === "Biological Sciences"){
+              sortedRows.push({
+                  name:response[i].name,
+                  department:response[i].department,
+                  hpsrn:response[i].hpsrn,
+                  email:response[i].email,
+              });
+          }
+      }
+      for(let i=0;i<response.length;i++){
+        if(response[i].department === "Chemical Engineering"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Chemistry"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Civil Engineering"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Computer Science and Information Systems"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Electrical and Electronics Engineering"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Humanities and Social Sciences"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Mathematics"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Mechanical Engineering"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Pharmacy"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    for(var i=0;i<response.length;i++){
+        if(response[i].department === "Physics"){
+            sortedRows.push({
+                name:response[i].name,
+                department:response[i].department,
+                hpsrn:response[i].hpsrn,
+                email:response[i].email,
+            });
+        }
+    }
+    setRows(sortedRows);
     }
     getListOfPhds();
   },[]);
@@ -143,7 +254,7 @@ function Dashboard() {
   return (
     <div>
       <div className="text-center text-3xl mx-auto my-4 text-black">
-        Dashboard
+      HODs
       </div>
 
       {/* Filter Search for Admin */}
@@ -175,10 +286,9 @@ function Dashboard() {
             <TableHead>
               <TableRow>
                 <StyledTableCell align="center">Department</StyledTableCell>
-                <StyledTableCell align="center">Requested By</StyledTableCell>
-                <StyledTableCell align="center">Reason</StyledTableCell>
-                <StyledTableCell align="center">Leave Dates</StyledTableCell>
-                <StyledTableCell align="center">Actions</StyledTableCell>
+                <StyledTableCell align="center">Name</StyledTableCell>
+                <StyledTableCell align="center">HPSRN</StyledTableCell>
+                <StyledTableCell align="center">Email</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -190,7 +300,6 @@ function Dashboard() {
                 : rows
               ).map((row) => (
                 <TableRow>
-
                   <TableCell component="th" scope="row" align="center">
                     {row.department}
                   </TableCell>
@@ -198,20 +307,10 @@ function Dashboard() {
                     {row.name}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {row.reason}
+                    {row.hpsrn}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {row.date}
-                  </TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    align="center"
-                  >
-                    <div className="flex flex-row items-center justify-center">
-                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md">Approve</button>
-                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md">Deny</button>
-                    </div>
+                    {row.email}
                   </TableCell>
                 </TableRow>
               ))}
@@ -249,4 +348,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DisplayHODs;

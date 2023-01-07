@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
-import {REACT_APP_APIURL} from '../config'
+import { REACT_APP_APIURL } from '../config'
 
 import "./form.css";
 import Calendar from "react-select-date";
 
-const REGEX = new RegExp(`(H[0-9]{4})|(41[0-3]20[1-2][0-9][0-9]{4})`) 
+const REGEX = new RegExp(`(H[0-9]{4})|(41[0-3]20[1-2][0-9][0-9]{4})`)
 
 
 export default function Form() {
@@ -21,9 +21,7 @@ export default function Form() {
   //   }
   //   setCredentials(newObj)
   // }, [])
-  async function postData(url = `${REACT_APP_APIURL}/submit`, data = {}) {
-
-   
+  async function postData(url = "http://127.0.0.1:5000/submit", data = {}) {
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -38,13 +36,14 @@ export default function Form() {
     });
     return response.json(); // parses JSON response into native JavaScript objects
   }
+
   const inputChangeHandler = (e, i) => {
     setFormData((prev) => e.target.value);
     console.log(e.target.value);
   };
-  
+
   const submitHandler = (event) => {
-    if(!REGEX.test(idRef.current.value)){
+    if (!REGEX.test(idRef.current.value)) {
       alert('Please Enter Valid ID')
       return
     }
@@ -56,15 +55,15 @@ export default function Form() {
       reason: formData,
       id: idRef.current.value,
       multipleDate,
-      name:displayName,
-      email:email,
+      name: displayName,
+      email: email,
       branch: branchRef.current.value
     };
- 
+
     postData(`${REACT_APP_APIURL}/submit/`, submitData).then((res) =>
       console.log(res)
     );
-    
+
     alert('Email sent successfully!');
     localStorage.clear();
     window.location.reload();
@@ -92,7 +91,7 @@ export default function Form() {
           className="px-4 max-w-3xl mx-auto space-y-6"
           onSubmit={submitHandler}
         >
-           <h3>Welcome, <strong>{localStorage.getItem("displayName")}</strong></h3>
+          <h3>Welcome, <strong>{localStorage.getItem("displayName")}</strong></h3>
           <br />
 
           <div className="flex justify-center">
@@ -116,20 +115,20 @@ export default function Form() {
           </div>
 
           <div className="flex justify-center">
-          {true ? (
-            <Calendar
-              onSelect={(date) => setMultipleDate(date)}
-              templateClr="blue"
-              selectDateType="multiple"
-              showDateInputField={false}
-              minDate="2022-12-16"
-              maxDate="2023-12-31"
-            />
-          ) : null}
+            {true ? (
+              <Calendar
+                onSelect={(date) => setMultipleDate(date)}
+                templateClr="blue"
+                selectDateType="multiple"
+                showDateInputField={false}
+                minDate="2022-12-16"
+                maxDate="2023-12-31"
+              />
+            ) : null}
           </div>
-        <div>
-        Note: ID should be of format <b>41220221234</b> and PSRN should be of the format <b>H0234</b>
-        </div>
+          <div>
+            Note: ID should be of format <b>41220221234</b> and PSRN should be of the format <b>H0234</b>
+          </div>
           <div className="flex justify-center">
             <div className="mb-3 xl:w-96 flex flex-row w-full">
               <label
@@ -178,7 +177,7 @@ export default function Form() {
               <option>Civil Engineering</option>
               <option>Computer Science and Information Systems</option>
               <option>Economics and Finance</option>
-              <option>Electrical and Electronics Engineerin</option>
+              <option>Electrical and Electronics Engineering</option>
               <option>Humanities and Social Sciences</option>
               <option>Mathematics</option>
               <option>Mechanical Engineering</option>
@@ -195,7 +194,7 @@ export default function Form() {
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button
-            type="button"
+              type="button"
               className="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full my-[5%]"
               onClick={logout}
             >
