@@ -107,7 +107,7 @@ function Dashboard() {
 
   useEffect(()=>{
     async function getListOfPhds(){
-      var response = await fetch("http://127.0.0.1:5000/admin/phdApproved",{
+      var response = await fetch("http://127.0.0.1:5004/admin/phdApproved",{
         method: "GET",
         mode: "cors",
         cache: "no-cache",
