@@ -21,7 +21,7 @@ export default function Form() {
   //   }
   //   setCredentials(newObj)
   // }, [])
-  async function postData(url = "http://127.0.0.1:5000/submit", data = {}) {
+  async function postData(url = "http://127.0.0.1:5004/submit", data = {}) {
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

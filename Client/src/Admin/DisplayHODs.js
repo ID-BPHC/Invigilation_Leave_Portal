@@ -108,7 +108,7 @@ function DisplayHODs() {
 
   useEffect(()=>{
     async function getListOfPhds(){
-      var response = await fetch("http://127.0.0.1:5000/admin/getAllHods",{
+      var response = await fetch("http://127.0.0.1:5004/admin/getAllHods",{
         method: "GET",
         mode: "cors",
         cache: "no-cache",
