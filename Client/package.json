@@ -1,6 +1,7 @@
 {
   "name": "ttd-leave-v2",
   "version": "0.1.0",
+  "homepage": "https://td.bits-hyderabad.ac.in/leave",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
