@@ -26,7 +26,7 @@ function Signin() {
     <div>
       {value ? (
         // TODO: Change email to td email
-        value === "f2021781@hyderabad.bits-pilani.ac.in" ? (
+        value === "f20210781@hyderabad.bits-pilani.ac.in" ? (
           <Admin />
         ) : HOD_Data.some((i) => i.hod.some((j) => j === value)) ? ( // needs fix
           <HOD
