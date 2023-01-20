@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 5004;
 
 // submit endpoint when user fills the form for leave
-app.post("/submit", async (req, res) => {
+app.post("/api/leave/submit", async (req, res) => {
   try {
     const { id, name, email, branch, reason, multipleDate } = req.body;
     console.log(req.body);
@@ -108,7 +108,7 @@ app.post("/submit", async (req, res) => {
 });
 
 // reply endpoint when the hod clicks the button
-app.post("/reply", async (req, res) => {
+app.post("/api/leave/reply", async (req, res) => {
   try {
     var email = req.query.email;
     if (req.body.accept) {
@@ -147,7 +147,7 @@ app.post("/reply", async (req, res) => {
 });
 
 // hod endpoint to get list of all phd students from their department who's request has been approved
-app.post("/hod/phdApproved", (req, res) => {
+app.post("/api/leave/hod/phdApproved", (req, res) => {
   try {
     Phd.find({ leave: true, department: req.body.department }, (err, phds) => {
       if (err) {
@@ -163,7 +163,7 @@ app.post("/hod/phdApproved", (req, res) => {
 });
 
 // admin endpoint to get list of all hods
-app.get("/admin/getAllHods", (req, res) => {
+app.get("/api/leave/admin/getAllHods", (req, res) => {
   try {
     Hod.find({}, (err, hods) => {
       if (err) {
@@ -178,7 +178,7 @@ app.get("/admin/getAllHods", (req, res) => {
 });
 
 // admin endpoint to get list of all phd students who's request has been approved
-app.get("/admin/phdApproved", (req, res) => {
+app.get("/api/leave/admin/phdApproved", (req, res) => {
   try {
     Phd.find({ leave: true }, (err, phds) => {
       if (err) {
@@ -194,7 +194,7 @@ app.get("/admin/phdApproved", (req, res) => {
 });
 
 // admin endpoint to replace the previous hod
-app.post("/admin/changeHod", async (req, res) => {
+app.post("/api/leave/admin/changeHod", async (req, res) => {
   try {
     const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
       req.body;
@@ -223,7 +223,7 @@ app.post("/admin/changeHod", async (req, res) => {
 });
 
 // admin endpoint to add the new hod to db
-app.post("/admin/addHod", (req, res) => {
+app.post("/api/leave/admin/addHod", (req, res) => {
   try {
     const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
       req.body;
@@ -243,8 +243,12 @@ app.post("/admin/addHod", (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
+app.get("/api/leave", (req, res) => {
   res.send("Hello world");
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello world /");
 });
 
 app.listen(PORT, (err) => {
