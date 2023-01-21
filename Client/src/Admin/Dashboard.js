@@ -107,7 +107,7 @@ function Dashboard() {
 
   useEffect(()=>{
     async function getListOfPhds(){
-      var response = await fetch("http://127.0.0.1:5004/api/leave/admin/phdApproved",{
+      var response = await fetch("http://127.0.0.1:5004/api/leave/admin/phd",{
         method: "GET",
         mode: "cors",
         cache: "no-cache",
@@ -139,6 +139,23 @@ function Dashboard() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  // const handleSubmit = (num) =>{
+  //   async function ApprovePhd(){
+  //     var response = await fetch("http://127.0.0.1:5004/api/leave/admin/phd",{
+  //       method: "GET",
+  //       mode: "cors",
+  //       cache: "no-cache",
+  //       credentials: "same-origin",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     response = await response.json();
+  //     setRows(response);
+  //   }
+  //   ApprovePhd();
+  // }
 
   return (
     <div>
@@ -210,7 +227,7 @@ function Dashboard() {
                   >
                     <div className="flex flex-row items-center justify-center">
                       <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md">Approve</button>
-                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md">Deny</button>
+                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" >Deny</button>
                     </div>
                   </TableCell>
                 </TableRow>
