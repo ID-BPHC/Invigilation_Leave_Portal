@@ -105,9 +105,10 @@ function DisplayHODs() {
 
   const[rows,setRows] = useState([]);
   const sortedRows = [];
+  var count  = 0;
 
   useEffect(()=>{
-    async function getListOfPhds(){
+    async function getListOfHods(){
       var response = await fetch("http://127.0.0.1:5004/api/leave/admin/getAllHods",{
         method: "GET",
         mode: "cors",
@@ -118,120 +119,137 @@ function DisplayHODs() {
         },
       });
       response = await response.json();
-      for(let i=0;i<response.length;i++){
-          if(response[i].department === "Biological Sciences"){
-              sortedRows.push({
-                  name:response[i].name,
-                  department:response[i].department,
-                  hpsrn:response[i].hpsrn,
-                  email:response[i].email,
-              });
-          }
+      if(count == 0){
+        setArray(response);
+        count++;
       }
-      for(let i=0;i<response.length;i++){
-        if(response[i].department === "Chemical Engineering"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
     }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Chemistry"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Civil Engineering"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Computer Science and Information Systems"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Electrical and Electronics Engineering"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Humanities and Social Sciences"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Mathematics"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Mechanical Engineering"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Pharmacy"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    for(var i=0;i<response.length;i++){
-        if(response[i].department === "Physics"){
-            sortedRows.push({
-                name:response[i].name,
-                department:response[i].department,
-                hpsrn:response[i].hpsrn,
-                email:response[i].email,
-            });
-        }
-    }
-    setRows(sortedRows);
-    }
-    getListOfPhds();
+    getListOfHods();
   },[]);
+
+  function setArray(response){
+    for(let i=0;i<response.length;i++){
+      if(response[i].department === "Biological Sciences"){
+          sortedRows.push({
+              name:response[i].name,
+              department:response[i].department,
+              hpsrn:response[i].hpsrn,
+              email:response[i].email,
+          });
+      }
+  }
+  for(let i=0;i<response.length;i++){
+    if(response[i].department === "Chemical Engineering"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Chemistry"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Civil Engineering"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Computer Science and Information Systems"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Electrical and Electronics Engineering"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Humanities and Social Sciences"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Mathematics"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Mechanical Engineering"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+  if(response[i].department === "Economics and Finance"){
+      sortedRows.push({
+          name:response[i].name,
+          department:response[i].department,
+          hpsrn:response[i].hpsrn,
+          email:response[i].email,
+      });
+  }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Pharmacy"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+for(var i=0;i<response.length;i++){
+    if(response[i].department === "Physics"){
+        sortedRows.push({
+            name:response[i].name,
+            department:response[i].department,
+            hpsrn:response[i].hpsrn,
+            email:response[i].email,
+        });
+    }
+}
+setRows(sortedRows);
+  }
   
   const [selector, setSelector] = useState("");
 
