@@ -99,7 +99,6 @@ app.post("/api/leave/submit", async (req, res) => {
       reason: req.body.reason,
       date: req.body.multipleDate,
     });
-    console.log(phD);
     res.redirect("http://localhost:3000");
   } catch (error) {
     console.log(error);
@@ -193,6 +192,22 @@ app.get("/api/leave/admin/phdApproved", (req, res) => {
   }
 });
 
+// admin endpoint to get list of all phd students.
+app.get("/api/leave/admin/phd", (req, res) => {
+  try {
+    Phd.find({}, (err, phds) => {
+      if (err) {
+        console.log("error in finding the list of phds with approved request");
+        return;
+      }
+      return res.send(phds);
+    });
+  } catch (err) {
+    console.log(error);
+    res.send("Internal Server Error Occured");
+  }
+});
+
 // admin endpoint to replace the previous hod
 app.post("/api/leave/admin/changeHod", async (req, res) => {
   try {
@@ -223,12 +238,12 @@ app.post("/api/leave/admin/changeHod", async (req, res) => {
 });
 
 // admin endpoint to add the new hod to db
-app.post("/api/leave/admin/addHod", (req, res) => {
+app.post("/api/leave/admin/addHod", async (req, res) => {
   try {
     const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
       req.body;
     console.log(req.body);
-    let hod = Hod.create({
+    let hod = await Hod.create({
       name: nameOfNewHod,
       department: deptOfNewHod,
       hpsrn: hpsrnOfNewHod,

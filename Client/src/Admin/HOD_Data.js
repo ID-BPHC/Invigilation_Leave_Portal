@@ -1,9 +1,9 @@
 export const HOD_Data = [
-  {
-    value: "admin",
-    text: "-- Select Dept --",
-    hod: ["f20210528@hyderabad.bits-pilani.ac.in"],
-  },
+  // {
+  //   value: "admin",
+  //   text: "-- Select Dept --",
+  //   hod: ["f20212587@hyderabad.bits-pilani.ac.in"],
+  // },
   {
     value: "Biological Sciences",
     text: "Biological Sciences",
@@ -28,7 +28,7 @@ export const HOD_Data = [
   {
     value: "Economics and Finance",
     text: "Economics and Finance",
-    hod: ["dushyant@hyderabad.bits-pilani.ac.in"],
+    hod: ["f202125887@hyderabad.bits-pilani.ac.in","f20212087@hyderabad.bits-pilani.ac.in"],
   },
   { value: "EEE", text: "EEE", hod: ["sahoo@hyderabad.bits-pilani.ac.in"] },
   {

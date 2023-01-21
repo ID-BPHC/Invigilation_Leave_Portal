@@ -15,7 +15,7 @@ function ManageHODs({ hodDept, setHodDept }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var response = await fetch("http://127.0.0.1:5004/api/leave/admin/changeHod", {
+    var response = await fetch("http://127.0.0.1:5004/api/leave/admin/addHod", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
