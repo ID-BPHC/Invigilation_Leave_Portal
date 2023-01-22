@@ -18,22 +18,21 @@
         <h3>{{title}}</h3>
         <p>{{text}}</p>
         <form method = "POST" action = "{{url}}/reply/?email={{email}}" >
-             Respected Sir/Ma'am
+             Dear {{name}}
                 <br></br>
 
-                <div>
-                    I am <b>{{name}}</b>, from <b>{{branch}}</b> and I will not be able to appear for 
+                    {{!-- I am <b>{{name}}</b>, from <b>{{branch}}</b> and I will not be able to appear for 
                     invigilation duty due to the following reason(s) <br></br>
-                    {{reason}}
-                </div>
+                    {{reason}} --}}
+                    Your leave request has been {{reply}}.
 
                 <div>
-                    Kindly provide leave for the following dates
+                    {{!-- Kindly provide leave for the following dates
                     <br></br>
-                    {{newDates}}
+                    {{newDates}} --}}
                 </div>
-                 <input type = "submit" value = "Approve" name = "accept"/>
-                 <input type = "submit" value = "Reject" name = "reject"/>
+                 {{!-- <input type = "submit" value = "Approve" name = "accept"/>
+                 <input type = "submit" value = "Reject" name = "reject"/> --}}
 
                 <div>
                  Note: This is a system generated email

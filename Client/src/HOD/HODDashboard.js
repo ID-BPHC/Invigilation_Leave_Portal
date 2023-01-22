@@ -165,7 +165,7 @@ function Dashboard({ department }) {
       });
       response = await response.json();
       console.log(response);
-      window.alert(`You Have ${response?"Accepted":"Rejected"} the leave. If you want to modify your request, you can hit approve/deny button again`);
+      window.alert(`You Have ${response?"Accepted":"Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
       return;
     }
     ApprovePhd();
