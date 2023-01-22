@@ -145,10 +145,10 @@ app.post("/api/leave/reply", async (req, res) => {
   }
 });
 
-// hod endpoint to get list of all phd students from their department who's request has been approved
-app.post("/api/leave/hod/phdApproved", (req, res) => {
+// hod endpoint to get list of all phd students from their department.
+app.post("/api/leave/hod/phd", (req, res) => {
   try {
-    Phd.find({ leave: true, department: req.body.department }, (err, phds) => {
+    Phd.find({department: req.body.department }, (err, phds) => {
       if (err) {
         console.log("error in finding the list of phds with approved request");
         return;
@@ -255,6 +255,30 @@ app.post("/api/leave/admin/addHod", async (req, res) => {
     console.log(err);
     res.send("Internal Server Error Occured");
     return res.send(false);
+  }
+});
+
+// admin endpoint to approve/reject the leave of phd student
+app.post("/api/leave/admin/response",async (req,res)=>{
+  console.log(req.body);
+  try{
+    var reply = req.body.reply;
+    var email = req.body.email;
+    Phd.findOneAndUpdate(
+      { emailId: email },
+      { $set: { leave: (reply)?true:false } },
+      (err, data) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      }
+    );
+    console.log("update done in db");
+    return res.send((reply)?true:false);
+  }catch(err){
+    console.log(err);
+    res.send("Internal Server Error Occured");
   }
 });
 
