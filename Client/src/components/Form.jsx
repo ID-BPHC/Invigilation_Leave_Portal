@@ -21,7 +21,7 @@ export default function Form() {
   //   }
   //   setCredentials(newObj)
   // }, [])
-  async function postData(url = "http://127.0.0.1:5004/api/leave/submit", data = {}) {
+  async function postData(url = `${REACT_APP_APIURL}/api/leave/submit`, data = {}) {
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -64,9 +64,9 @@ export default function Form() {
       console.log(res)
     );
 
-    alert('Email sent successfully!');
-    localStorage.clear();
-    window.location.reload();
+    alert('Form Submitted successfully!!, Logging out');
+    // localStorage.clear();
+    // window.location.reload();
 
   };
 
