@@ -21,11 +21,9 @@ function Signin() {
   useEffect(() => {
     setValue(localStorage.getItem("email"));
   }, []);
-  // console.log(value)
   return (
     <div>
       {value ? (
-        // TODO: Change email to td email
         value === "td@hyderabad.bits-pilani.ac.in" ? (
           <Admin />
         ) : HOD_Data.some((i) => i.hod.some((j) => j === value)) ? ( // needs fix

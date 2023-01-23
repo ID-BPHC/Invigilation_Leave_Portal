@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "./HOD_Data";
-import {REACT_APP_APIURL} from '../config'
-
+import {REACT_APP_APIURL} from '../config';
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";

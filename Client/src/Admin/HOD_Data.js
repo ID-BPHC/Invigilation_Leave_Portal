@@ -28,13 +28,13 @@ export const HOD_Data = [
   {
     value: "Economics and Finance",
     text: "Economics and Finance",
-    hod: ["f202125887@hyderabad.bits-pilani.ac.in","f20212587@hyderabad.bits-pilani.ac.in"],
+    hod: ["f202125887@hyderabad.bits-pilani.ac.in"],
   },
   { value: "EEE", text: "EEE", hod: ["sahoo@hyderabad.bits-pilani.ac.in"] },
   {
     value: "Humanities and Social Sciences",
     text: "Humanities and Social Sciences",
-    hod: ["shilpaa.anand@hyderabad.bits-pilani.ac.in"],
+    hod: ["shilpaa.anand@hyderabad.bits-pilani.ac.in","f2021258887@hyderabad.bits-pilani.ac.in"],
   },
   {
     value: "Mathematics",
@@ -57,3 +57,6 @@ export const HOD_Data = [
     hod: ["sarmistha.banik@hyderabad.bits-pilani.ac.in"],
   },
 ];
+
+
+

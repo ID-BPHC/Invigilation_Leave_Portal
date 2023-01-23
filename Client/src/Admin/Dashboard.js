@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "./HOD_Data";
-import {REACT_APP_APIURL} from '../config'
-
+import {REACT_APP_APIURL} from '../config';
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
@@ -235,7 +234,7 @@ function Dashboard() {
                     {row.reason}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {row.date}
+                  {row.date+ " "} &nbsp; &nbsp;
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     {(row.leave)?"Approved":"Rejected"}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "../Admin/HOD_Data";
-import {REACT_APP_APIURL} from '../config'
-
+import {REACT_APP_APIURL} from '../config';
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
@@ -123,7 +122,7 @@ function Dashboard({ department }) {
 
   useEffect(() => {
     getListOfPhds();
-  }, [department]);
+  }, []);
 
   const [selector, setSelector] = useState("");
 
@@ -176,10 +175,16 @@ function Dashboard({ department }) {
 
   return (
     <div>
-      <div className="text-center text-3xl mx-auto my-4 text-black">
+      {/* <div className="text-center text-3xl mx-auto my-4 text-black">
         Dashboard
+      </div> */}
+      <div className="text-center text-3xl mx-auto my-4 text-black">
+        {HOD_Data.map((ele)=>{
+          if(ele.hod.includes(localStorage.getItem("email"))){
+            return (<div>Dept. of {ele.text}</div>);
+          }}
+          )}
       </div>
-
       {/* Filter Search for Admin */}
       {localStorage.getItem("email") === HOD_Data[0].value && (
         <div className="flex flex-row text-center items-center mx-auto ">
@@ -237,7 +242,7 @@ function Dashboard({ department }) {
                     {row.reason}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {row.date}
+                    {row.date + " "}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     {(row.leave)?"Approved":"Rejected"}
