@@ -24,6 +24,7 @@ const phdSchema = new mongoose.Schema({
     emailId:{
         type:String,
         required:true,
+        unique:false,
     },
     reason:{
         type:String,

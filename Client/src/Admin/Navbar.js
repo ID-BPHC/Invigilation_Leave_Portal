@@ -57,6 +57,9 @@ export default function Example({setSelected}) {
                     <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('Display HODs')}>
                       Display HODs
                     </a>
+                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('Date')}>
+                      Manage Date
+                    </a>
                   </div>
                 </div>
               </div>

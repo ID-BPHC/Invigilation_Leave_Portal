@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const Hod = require("../Backend/Models/Hod");
 const Phd = require("../Backend/Models/Phd");
+const Date = require("../Backend/Models/Date");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 const cors = require("cors");
@@ -18,76 +19,21 @@ const PORT = process.env.PORT || 5004;
 
 // submit endpoint when user fills the form for leave
 app.post("/api/leave/submit", async (req, res) => {
+  console.log(req.body);
   try {
     const { id, name, email, branch, reason, multipleDate } = req.body;
-    console.log(req.body);
     let newDates = [];
-    for (let date of multipleDate) {
-      const today = new Date(date);
-      const yyyy = today.getFullYear();
-      let mm = today.getMonth() + 1; // Months start at 0!
-      let dd = today.getDate();
-      if (dd < 10) dd = "0" + dd;
-      if (mm < 10) mm = "0" + mm;
-
-      const formattedToday =
-        dd.toString() + "/" + mm.toString() + "/" + yyyy.toString();
-      newDates.push(formattedToday);
-    }
-    console.log(newDates);
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    const handlebarOptions = {
-      viewEngine: {
-        extName: ".handlebars",
-        partialsDir: path.resolve("./view"),
-        defaultLayout: false,
-      },
-      viewPath: path.resolve("./view"),
-      extName: ".handlebars",
-    };
-    transporter.use("compile", hbs(handlebarOptions));
-
-    let hod = await Hod.findOne({ department: branch });
-    console.log(hod);
-
-    // let hodEmail =
-    //   hod !== undefined && hod.email !== undefined
-    //     ? hod.email
-    //     : "td@hyderabad.bits-pilani.ac.in";
-
-    let mailOptions = {
-      from: "",
-      to: "",
-      subject: "Invigilation Leave Portal",
-      context: {
-        title: "Request for Invigilation Leave",
-        email: email,
-        name,
-        branch,
-        reason,
-        newDates,
-        url: process.env.BASEURL,
-      },
-      template: "index",
-    };
-
-    transporter.sendMail(mailOptions, (err, success) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log("Email sent successfully!!");
-    });
-
+    // for (let date of multipleDate) {
+    //   const today = new Date(date);
+    //   const yyyy = today.getFullYear();
+    //   let mm = today.getMonth() + 1; // Months start at 0!
+    //   let dd = today.getDate();
+    //   if (dd < 10) dd = "0" + dd;
+    //   if (mm < 10) mm = "0" + mm;
+    //   const formattedToday = dd.toString() + "/" + mm.toString() + "/" + yyyy.toString();
+    //   newDates.push(formattedToday);
+    //   console.log(newDates);
+    // }
     let phD = await Phd.create({
       name: name,
       department: branch,
@@ -97,9 +43,9 @@ app.post("/api/leave/submit", async (req, res) => {
       emailId: email,
       leave: false,
       reason: req.body.reason,
-      date: req.body.multipleDate,
+      date: multipleDate,
     });
-    res.redirect("http://localhost:3000");
+    console.log(phD);
   } catch (error) {
     console.log(error);
     res.send("Internal Server Error Occured");
@@ -277,8 +223,10 @@ app.post("/api/leave/admin/response",async (req,res)=>{
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
+        // user: process.env.EMAIL,
+        user:"pavasgarg2003@gmail.com",
+        // pass: process.env.PASSWORD,
+        pass:"xgkzvtebcqclcwzv",
       },
       tls: {
         rejectUnauthorized: false,
@@ -300,14 +248,14 @@ app.post("/api/leave/admin/response",async (req,res)=>{
         return;
       }
       let mailOptions = {
-        from: "td@hyderabad.bits-pilani.ac.in",
+        from: "pavasgarg2003@gmail.com",
         to: email,
-        subject: "Invigilation Leave Portal",
+        subject: "Invigilation Leave Request",
         context: {
           title: "Invigilation Leave",
           email: email,
           name:phd[0].name,
-          reply:(reply)?"approved":"rejected",
+          reply:(reply)?"Approved":"Rejected",
           url: process.env.BASEURL,
         },
         template: "index",
@@ -326,6 +274,38 @@ app.post("/api/leave/admin/response",async (req,res)=>{
   }catch(err){
     console.log(err);
     res.send("Internal Server Error Occured");
+  }
+});
+
+// admin endpoint to set the start and end date
+app.post("/api/leave/admin/date",async (req,res)=>{
+  try{
+    const dateObj = req.body;
+    let date = await Date.create(dateObj);
+    console.log(date);
+    return res.send(true);
+  }catch(err){
+    console.log(err);
+    return res.send("Internal Server Error Occured");
+  }
+});
+
+// admin endpoint to get dates
+app.get("/api/leave/admin/getDate",async (req,res)=>{
+  try{
+    Date.find({},(err,dates)=>{
+      if(err){
+        console.log("Error in fetching the dates from Database");
+        return;
+      }
+      const date = dates[dates.length - 1];
+      return res.send(date);
+    })
+  }catch(err){
+    if(err){
+      console.log(err);
+      return res.send("Internal Server Error Occured");
+    }
   }
 });
 
