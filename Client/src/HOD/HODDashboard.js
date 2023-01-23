@@ -103,23 +103,24 @@ TablePaginationActions.propTypes = {
 function Dashboard({ department }) {
   const [rows, setRows] = useState([]);
 
+  async function getListOfPhds() {
+    var response = await fetch("http://127.0.0.1:5004/api/leave/hod/phd", {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        department: department,
+      }),
+    });
+    response = await response.json();
+    setRows(response);
+  }
+
   useEffect(() => {
-    async function getListOfPhds() {
-      var response = await fetch("http://127.0.0.1:5004/api/leave/hod/phdApproved", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          department: department,
-        }),
-      });
-      response = await response.json();
-      setRows(response);
-    }
     getListOfPhds();
   }, [department]);
 
@@ -140,6 +141,37 @@ function Dashboard({ department }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const[reply,setReply] = useState(0);
+  const[email,setEmail] = useState(" ");
+
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    async function ApprovePhd(){
+      var response = await fetch("http://127.0.0.1:5004/api/leave/admin/response",{
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body:JSON.stringify({
+          reply:reply,
+          email:email,
+        }),
+      });
+      response = await response.json();
+      console.log(response);
+      window.alert(`You Have ${response?"Accepted":"Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
+      return;
+    }
+    ApprovePhd();
+    getListOfPhds();
+    getListOfPhds();
+  }
 
   return (
     <div>
@@ -180,6 +212,7 @@ function Dashboard({ department }) {
                 <StyledTableCell align="center">Requested By</StyledTableCell>
                 <StyledTableCell align="center">Reason</StyledTableCell>
                 <StyledTableCell align="center">Leave Dates</StyledTableCell>
+                <StyledTableCell align="center">Leave Status</StyledTableCell>
                 <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
             </TableHead>
@@ -192,6 +225,7 @@ function Dashboard({ department }) {
                 : rows
               ).map((row) => (
                 <TableRow>
+
                   <TableCell component="th" scope="row" align="center">
                     {row.department}
                   </TableCell>
@@ -205,14 +239,25 @@ function Dashboard({ department }) {
                     {row.date}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
+                    {(row.leave)?"Approved":"Rejected"}
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    align="center"
+                  >
+                  <form method = "POST" onSubmit = {handleSubmit}>
                     <div className="flex flex-row items-center justify-center">
-                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md">
-                        Approve
-                      </button>
-                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md">
-                        Deny
-                      </button>
+                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={()=>{
+                        setReply(1);
+                        setEmail(row.emailId);
+                      }} type="submit">Approve</button>
+                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name = "deny"  onClick={()=>{
+                        setReply(0);
+                        setEmail(row.emailId);
+                      }} type="submit">Deny</button>
                     </div>
+                  </form>
                   </TableCell>
                 </TableRow>
               ))}

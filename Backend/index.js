@@ -145,10 +145,10 @@ app.post("/api/leave/reply", async (req, res) => {
   }
 });
 
-// hod endpoint to get list of all phd students from their department who's request has been approved
-app.post("/api/leave/hod/phdApproved", (req, res) => {
+// hod endpoint to get list of all phd students from their department.
+app.post("/api/leave/hod/phd", (req, res) => {
   try {
-    Phd.find({ leave: true, department: req.body.department }, (err, phds) => {
+    Phd.find({department: req.body.department }, (err, phds) => {
       if (err) {
         console.log("error in finding the list of phds with approved request");
         return;
@@ -255,6 +255,77 @@ app.post("/api/leave/admin/addHod", async (req, res) => {
     console.log(err);
     res.send("Internal Server Error Occured");
     return res.send(false);
+  }
+});
+
+// admin endpoint to approve/reject the leave of phd student
+app.post("/api/leave/admin/response",async (req,res)=>{
+  try{
+    var reply = req.body.reply;
+    var email = req.body.email;
+    Phd.findOneAndUpdate(
+      { emailId: email },
+      { $set: { leave: (reply)?true:false } },
+      (err, data) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      }
+    );
+    // sending email for confirmation.
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+    const handlebarOptions = {
+      viewEngine: {
+        extName: ".handlebars",
+        partialsDir: path.resolve("./view"),
+        defaultLayout: false,
+      },
+      viewPath: path.resolve("./view"),
+      extName: ".handlebars",
+    };
+    transporter.use("compile", hbs(handlebarOptions));
+    Phd.find({ emailId: email}, (err, phd) => {
+      if (err) {
+        console.log("error in finding the list of phds with approved request");
+        return;
+      }
+      let mailOptions = {
+        from: "td@hyderabad.bits-pilani.ac.in",
+        to: email,
+        subject: "Invigilation Leave Portal",
+        context: {
+          title: "Invigilation Leave",
+          email: email,
+          name:phd[0].name,
+          reply:(reply)?"approved":"rejected",
+          url: process.env.BASEURL,
+        },
+        template: "index",
+      };
+      // if reply is true then send mail.
+      if(true){
+        transporter.sendMail(mailOptions, (err, success) => {
+          if (err) {
+            console.log(err);
+          }
+          console.log("Email sent successfully!!");
+        });
+      }
+    });
+    return res.send((reply)?true:false);
+  }catch(err){
+    console.log(err);
+    res.send("Internal Server Error Occured");
   }
 });
 
