@@ -27,7 +27,7 @@ export default function Form() {
   // }, [])
 
   async function getDates(){
-    var response = await fetch("http://127.0.0.1:5004/api/leave/admin/getDate",{
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/getDate`,{
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -44,7 +44,7 @@ export default function Form() {
     getDates();
   },[]);
 
-  async function postData(url = "http://127.0.0.1:5004/api/leave/submit", data = {}) {
+  async function postData(url = `${REACT_APP_APIURL}/api/leave/submit`, data = {}) {
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

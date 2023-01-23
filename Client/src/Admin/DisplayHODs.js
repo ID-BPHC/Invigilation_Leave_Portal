@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "./HOD_Data";
-
+import {REACT_APP_APIURL} from '../config';
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
@@ -109,7 +109,7 @@ function DisplayHODs() {
 
   useEffect(()=>{
     async function getListOfHods(){
-      var response = await fetch("http://127.0.0.1:5004/api/leave/admin/getAllHods",{
+      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getAllHods`,{
         method: "GET",
         mode: "cors",
         cache: "no-cache",
