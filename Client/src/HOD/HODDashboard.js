@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "../Admin/HOD_Data";
+import {REACT_APP_APIURL} from '../config'
 
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
@@ -104,7 +105,7 @@ function Dashboard({ department }) {
   const [rows, setRows] = useState([]);
 
   async function getListOfPhds() {
-    var response = await fetch("http://127.0.0.1:5004/api/leave/hod/phd", {
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/hod/phd`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -148,7 +149,7 @@ function Dashboard({ department }) {
   const handleSubmit = (event) =>{
     event.preventDefault();
     async function ApprovePhd(){
-      var response = await fetch("http://127.0.0.1:5004/api/leave/admin/response",{
+      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/response`,{
         method: "POST",
         mode: "cors",
         cache: "no-cache",

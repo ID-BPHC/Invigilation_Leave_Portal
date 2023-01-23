@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HOD_Data } from "./HOD_Data";
 import { useNavigate } from "react-router";
+import {REACT_APP_APIURL} from '../config'
 
 function ManageHODs({ hodDept, setHodDept }) {
   
@@ -15,7 +16,7 @@ function ManageHODs({ hodDept, setHodDept }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var response = await fetch("http://127.0.0.1:5004/api/leave/admin/addHod", {
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/addHod`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
