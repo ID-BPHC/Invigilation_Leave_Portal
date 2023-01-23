@@ -223,10 +223,8 @@ app.post("/api/leave/admin/response",async (req,res)=>{
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        // user: process.env.EMAIL,
-        user:"pavasgarg2003@gmail.com",
-        // pass: process.env.PASSWORD,
-        pass:"xgkzvtebcqclcwzv",
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
       },
       tls: {
         rejectUnauthorized: false,
@@ -248,7 +246,7 @@ app.post("/api/leave/admin/response",async (req,res)=>{
         return;
       }
       let mailOptions = {
-        from: "pavasgarg2003@gmail.com",
+        from: "",
         to: email,
         subject: "Invigilation Leave Request",
         context: {
