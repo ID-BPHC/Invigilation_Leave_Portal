@@ -27,7 +27,7 @@ export default function Form() {
   // }, [])
 
   async function getDates(){
-    var response = await fetch(`${REACT_APP_APIURL}/api/leave/getDate`,{
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getDate`,{
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -45,6 +45,7 @@ export default function Form() {
   },[]);
 
   async function postData(url = `${REACT_APP_APIURL}/api/leave/submit`, data = {}) {
+    console.log(data);
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -83,7 +84,7 @@ export default function Form() {
       branch: branchRef.current.value
     };
 
-    postData(`${REACT_APP_APIURL}/submit/`, submitData).then((res) =>
+    postData(`${REACT_APP_APIURL}/api/leave/submit`, submitData).then((res) =>
       console.log(res)
     );
 

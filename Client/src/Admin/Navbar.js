@@ -7,13 +7,15 @@ const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Manage HODs", href: "#", current: false },
   { name: "Display HODs", href: "#", current: false },
+  { name: "Manage Date", href: "#", current: false },
+  { name: "Manage Permission", href: "#", current: false }
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({setSelected}) {
+export default function Example({ setSelected }) {
 
   const logout = () => {
     localStorage.clear();
@@ -48,17 +50,20 @@ export default function Example({setSelected}) {
 
                 <div className="items-center text-center my-auto px-3 hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('Dashboard')}>
+                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setSelected('Dashboard')}>
                       Dashboard
                     </a>
-                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('ManageHODs')}>
+                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setSelected('ManageHODs')}>
                       Manage HODs
                     </a>
-                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('Display HODs')}>
+                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setSelected('Display HODs')}>
                       Display HODs
                     </a>
-                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={()=> setSelected('Date')}>
+                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setSelected('Date')}>
                       Manage Date
+                    </a>
+                    <a className="items-center text-center text-gray-300 hover:text-white cursor-pointer hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium" onClick={() => setSelected('Accept')}>
+                      Manage Permission
                     </a>
                   </div>
                 </div>
