@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const Hod = require("../Backend/Models/Hod");
 const Phd = require("../Backend/Models/Phd");
 const Date = require("../Backend/Models/Date");
+const Accept = require("../Backend/Models/Accept");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 const cors = require("cors");
@@ -19,7 +20,7 @@ const PORT = process.env.PORT || 5004;
 
 // submit endpoint when user fills the form for leave
 app.post("/api/leave/submit", async (req, res) => {
-  console.log(req.body);
+  console.log("efew");
   try {
     const { id, name, email, branch, reason, multipleDate } = req.body;
     let newDates = [];
@@ -42,7 +43,7 @@ app.post("/api/leave/submit", async (req, res) => {
       phoneNo: 1234567890,
       emailId: email,
       leave: false,
-      reason: req.body.reason,
+      reason: reason,
       date: multipleDate,
     });
     console.log(phD);
@@ -298,6 +299,38 @@ app.get("/api/leave/admin/getDate",async (req,res)=>{
       }
       const date = dates[dates.length - 1];
       return res.send(date);
+    })
+  }catch(err){
+    if(err){
+      console.log(err);
+      return res.send("Internal Server Error Occured");
+    }
+  }
+});
+
+// admin endpoint to set the permissions for student and hod portal
+app.post("/api/leave/admin/permission",async (req,res)=>{
+  try{
+    const permission = req.body;
+    let accept = await Accept.create(permission);
+    console.log(accept);
+    return res.send(true);
+  }catch(err){
+    console.log(err);
+    return res.send("Internal Server Error Occured");
+  }
+});
+
+// admin endpoint to get permissions for student and hod portal
+app.get("/api/leave/admin/getPermission",async (req,res)=>{
+  try{
+    Accept.find({},(err,permissions)=>{
+      if(err){
+        console.log("Error in fetching the permission from Database");
+        return;
+      }
+      const permission = permissions[permissions.length - 1];
+      return res.send(permission);
     })
   }catch(err){
     if(err){

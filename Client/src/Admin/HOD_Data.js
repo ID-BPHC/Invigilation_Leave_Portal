@@ -7,7 +7,7 @@ export const HOD_Data = [
   {
     value: "Biological Sciences",
     text: "Biological Sciences",
-    hod: ["gupta.nishith@hyderabad.bits-pilani.ac.in"],
+    hod: ["gupta.nishith@hyderabad.bits-pilani.ac.in","f20212587@hyderabad.bits-pilani.ac.in"],
   },
   {
     value: "Chemical Engineering",
@@ -34,7 +34,7 @@ export const HOD_Data = [
   {
     value: "Humanities and Social Sciences",
     text: "Humanities and Social Sciences",
-    hod: ["shilpaa.anand@hyderabad.bits-pilani.ac.in","f2021258887@hyderabad.bits-pilani.ac.in"],
+    hod: ["shilpaa.anand@hyderabad.bits-pilani.ac.in"],
   },
   {
     value: "Mathematics",
