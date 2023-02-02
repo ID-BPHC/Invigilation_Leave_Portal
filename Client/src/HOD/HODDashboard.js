@@ -245,7 +245,7 @@ function Dashboard({ department }) {
                     {new Date(row?.date).toLocaleDateString() + " "}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {(row.leave)?"Approved":"Rejected"}
+                    {row.date ? new Date(row.date).toLocaleDateString() + " " : ""}
                   </TableCell>
                   <TableCell
                     component="th"
