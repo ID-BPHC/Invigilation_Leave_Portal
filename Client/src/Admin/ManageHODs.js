@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { HOD_Data } from "./HOD_Data";
 import { useNavigate } from "react-router";
-import {REACT_APP_APIURL} from '../config'
-
+import {REACT_APP_APIURL} from '../config';
 function ManageHODs({ hodDept, setHodDept }) {
   
   const [credentials, setCredentials] = useState({

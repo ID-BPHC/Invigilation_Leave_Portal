@@ -5,6 +5,7 @@ import Form from "../components/Form";
 import { HOD_Data } from "../Admin/HOD_Data";
 import Admin from "../Admin/Admin";
 import HOD from "../HOD/HOD";
+import { REACT_APP_APIURL } from '../config'
 // import "./signin.css";
 
 function Signin() {
@@ -18,25 +19,44 @@ function Signin() {
     });
   };
 
+  const[accept,setAccept] = useState({
+    student_portal:false,
+    hod_portal:false,
+  })
+  async function getPermission(){
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getPermission`,{
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    response = await response.json();
+    setAccept(response);
+  }
+
   useEffect(() => {
     setValue(localStorage.getItem("email"));
+    getPermission();
   }, []);
-  // console.log(value)
   return (
     <div>
       {value ? (
-        // TODO: Change email to td email
-        value === "td@hyderabad.bits-pilani.ac.in" ? (
+        value === "f20212587@hyderabad.bits-pilani.ac.in" ? (
           <Admin />
-        ) : HOD_Data.some((i) => i.hod.some((j) => j === value)) ? ( // needs fix
+        ) : HOD_Data.some((i) => i.hod.some((j) => j === value))? ( // needs fix
+        accept.hod_portal === false ?
           <HOD
             department={
               HOD_Data.filter((hod) => hod.hod.some((j) => j === value))[0]
                 .value
             }
-          />
+          /> : <h3 className="text-center justify-center text-3xl flex mt-[25%]" >Hod Portal is Closed </h3>
         ) : (
-          <Form />
+          accept.student_portal === false? 
+          <Form /> : <h3 className="text-center justify-center text-3xl flex mt-[25%]" >Student Portal is Closed</h3>
         )
       ) : (
         <div className=" min-h-screen absolute overflow-auto w-full bg-black/5">

@@ -15,30 +15,18 @@
         </style>
     </head>
     <body>
-        <h3>{{title}}</h3>
-        <p>{{text}}</p>
-        <form method = "POST" action = "{{url}}/reply/?email={{email}}" >
-             Dear {{name}}
-                <br></br>
-
-                    {{!-- I am <b>{{name}}</b>, from <b>{{branch}}</b> and I will not be able to appear for 
-                    invigilation duty due to the following reason(s) <br></br>
-                    {{reason}} --}}
-                    Your leave request has been {{reply}}.
-
-                <div>
-                    {{!-- Kindly provide leave for the following dates
-                    <br></br>
-                    {{newDates}} --}}
+        <h3 style="color:black;">{{title}}</h3>
+        <p style="color: black;">{{text}}</p>
+             Dear {{name}},
+                <br>
+                <h4>
+                     Your leave request has been {{reply}}. 
+                </h4>
+                <br>
+                <br>
+                <div style="color: red;">
+                Note: Please do not reply directly to this e-mail. This e-mail was sent from a notification-only address that cannot accept incoming e-mail.
                 </div>
-                 {{!-- <input type = "submit" value = "Approve" name = "accept"/>
-                 <input type = "submit" value = "Reject" name = "reject"/> --}}
-
-                <div>
-                 Note: This is a system generated email
-                </div>
-
-        </form>
     </body>
 </html>
 

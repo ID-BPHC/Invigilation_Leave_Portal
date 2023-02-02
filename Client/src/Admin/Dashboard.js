@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "./HOD_Data";
-import {REACT_APP_APIURL} from '../config'
-
+import {REACT_APP_APIURL} from '../config';
 // MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
@@ -21,6 +20,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+const XLSX = require("xlsx");
 // import { get } from "mongoose";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -173,10 +173,27 @@ function Dashboard() {
     getListOfPhds();
   }
 
+  const downloadAsExcel = () =>{
+    console.log("printing data");
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const workBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workBook,worksheet,"PHD Data");
+    // Generate Buffer
+    XLSX.write(workBook,{bookType:"xlsx",type:"buffer"});
+    // Binary String
+    XLSX.write(workBook,{bookType:"xlsx",type:"binary"});
+    XLSX.writeFile(workBook,"PhD_Leave_Data.xlsx");
+  }
+
   return (
     <div>
-      <div className="text-center text-3xl mx-auto my-4 text-black">
-        Dashboard
+      <div className="text-center text-3xl mx-auto my-4 text-black flex">
+        <div style = {{margin:"auto"}}>
+          Dashboard
+        </div>
+        <div style={{fontSize:"1.5rem",marginRight:"3vw"}}>
+        <button onClick = {downloadAsExcel} className="my-2 hover:bg-yellow-200 px-4 border-black border-2 rounded-2xl ">Download</button>
+        </div>
       </div>
 
       {/* Filter Search for Admin */}
@@ -235,7 +252,7 @@ function Dashboard() {
                     {row.reason}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {row.date}
+                  {row.date+ " "} &nbsp; &nbsp;
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     {(row.leave)?"Approved":"Rejected"}

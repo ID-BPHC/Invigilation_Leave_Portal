@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef ,useEffect} from "react";
 import { REACT_APP_APIURL } from '../config'
 
 import "./form.css";
@@ -13,6 +13,10 @@ export default function Form() {
   const idRef = useRef();
   const branchRef = useRef()
   const [multipleDate, setMultipleDate] = useState();
+  const[date,SetDate] = useState({
+    start:"",
+    end:"",
+  })
   // const [credentials, setCredentials] = useState({email:"", name:""});
   // useEffect(()=>{
   //   const newObj = {
@@ -21,7 +25,27 @@ export default function Form() {
   //   }
   //   setCredentials(newObj)
   // }, [])
+
+  async function getDates(){
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getDate`,{
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    response = await response.json();
+    SetDate(response);
+  }
+
+  useEffect(()=>{
+    getDates();
+  },[]);
+
   async function postData(url = `${REACT_APP_APIURL}/api/leave/submit`, data = {}) {
+    console.log(data);
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -60,13 +84,13 @@ export default function Form() {
       branch: branchRef.current.value
     };
 
-    postData(`${REACT_APP_APIURL}/submit/`, submitData).then((res) =>
+    postData(`${REACT_APP_APIURL}/api/leave/submit`, submitData).then((res) =>
       console.log(res)
     );
 
-    alert('Form Submitted successfully!!, Logging out');
-    // localStorage.clear();
-    // window.location.reload();
+    alert('Leave Request Submitted!!');
+    localStorage.clear();
+    window.location.reload();
 
   };
 
@@ -121,8 +145,8 @@ export default function Form() {
                 templateClr="blue"
                 selectDateType="multiple"
                 showDateInputField={false}
-                minDate="2022-12-16"
-                maxDate="2023-12-31"
+                minDate={date.start}
+                maxDate={date.end}
               />
             ) : null}
           </div>
