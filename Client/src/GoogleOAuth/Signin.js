@@ -44,7 +44,7 @@ function Signin() {
   return (
     <div>
       {value ? (
-        value === "f20212587@hyderabad.bits-pilani.ac.in" ? (
+        value === "td@hyderabad.bits-pilani.ac.in" ? (
           <Admin />
         ) : HOD_Data.some((i) => i.hod.some((j) => j === value))? ( // needs fix
         accept.hod_portal === false ?
