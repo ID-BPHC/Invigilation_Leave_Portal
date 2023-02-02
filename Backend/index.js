@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 5004;
 
 // submit endpoint when user fills the form for leave
-app.post("/api/leave/submit", async (req, res) => {
+app.post("/submit", async (req, res) => {
   console.log("efew");
   try {
     const { id, name, email, branch, reason, multipleDate } = req.body;
@@ -54,7 +54,7 @@ app.post("/api/leave/submit", async (req, res) => {
 });
 
 // reply endpoint when the hod clicks the button
-app.post("/api/leave/reply", async (req, res) => {
+app.post("/reply", async (req, res) => {
   try {
     var email = req.query.email;
     if (req.body.accept) {
@@ -93,7 +93,7 @@ app.post("/api/leave/reply", async (req, res) => {
 });
 
 // hod endpoint to get list of all phd students from their department.
-app.post("/api/leave/hod/phd", (req, res) => {
+app.post("/hod/phd", (req, res) => {
   try {
     Phd.find({department: req.body.department }, (err, phds) => {
       if (err) {
@@ -109,7 +109,7 @@ app.post("/api/leave/hod/phd", (req, res) => {
 });
 
 // admin endpoint to get list of all hods
-app.get("/api/leave/admin/getAllHods", (req, res) => {
+app.get("/admin/getAllHods", (req, res) => {
   try {
     Hod.find({}, (err, hods) => {
       if (err) {
@@ -124,7 +124,7 @@ app.get("/api/leave/admin/getAllHods", (req, res) => {
 });
 
 // admin endpoint to get list of all phd students who's request has been approved
-app.get("/api/leave/admin/phdApproved", (req, res) => {
+app.get("/admin/phdApproved", (req, res) => {
   try {
     Phd.find({ leave: true }, (err, phds) => {
       if (err) {
@@ -140,7 +140,7 @@ app.get("/api/leave/admin/phdApproved", (req, res) => {
 });
 
 // admin endpoint to get list of all phd students.
-app.get("/api/leave/admin/phd", (req, res) => {
+app.get("/admin/phd", (req, res) => {
   try {
     Phd.find({}, (err, phds) => {
       if (err) {
@@ -156,7 +156,7 @@ app.get("/api/leave/admin/phd", (req, res) => {
 });
 
 // admin endpoint to replace the previous hod
-app.post("/api/leave/admin/changeHod", async (req, res) => {
+app.post("/admin/changeHod", async (req, res) => {
   try {
     const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
       req.body;
@@ -185,7 +185,7 @@ app.post("/api/leave/admin/changeHod", async (req, res) => {
 });
 
 // admin endpoint to add the new hod to db
-app.post("/api/leave/admin/addHod", async (req, res) => {
+app.post("/admin/addHod", async (req, res) => {
   try {
     const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
       req.body;
@@ -206,7 +206,7 @@ app.post("/api/leave/admin/addHod", async (req, res) => {
 });
 
 // admin endpoint to approve/reject the leave of phd student
-app.post("/api/leave/admin/response",async (req,res)=>{
+app.post("/admin/response",async (req,res)=>{
   try{
     var reply = req.body.reply;
     var email = req.body.email;
@@ -277,7 +277,7 @@ app.post("/api/leave/admin/response",async (req,res)=>{
 });
 
 // admin endpoint to set the start and end date
-app.post("/api/leave/admin/date",async (req,res)=>{
+app.post("/admin/date",async (req,res)=>{
   try{
     const dateObj = req.body;
     let date = await Date.create(dateObj);
@@ -290,7 +290,7 @@ app.post("/api/leave/admin/date",async (req,res)=>{
 });
 
 // admin endpoint to get dates
-app.get("/api/leave/admin/getDate",async (req,res)=>{
+app.get("/admin/getDate",async (req,res)=>{
   try{
     Date.find({},(err,dates)=>{
       if(err){
@@ -309,7 +309,7 @@ app.get("/api/leave/admin/getDate",async (req,res)=>{
 });
 
 // admin endpoint to set the permissions for student and hod portal
-app.post("/api/leave/admin/permission",async (req,res)=>{
+app.post("/admin/permission",async (req,res)=>{
   try{
     const permission = req.body;
     let accept = await Accept.create(permission);
@@ -322,7 +322,7 @@ app.post("/api/leave/admin/permission",async (req,res)=>{
 });
 
 // admin endpoint to get permissions for student and hod portal
-app.get("/api/leave/admin/getPermission",async (req,res)=>{
+app.get("/admin/getPermission",async (req,res)=>{
   try{
     Accept.find({},(err,permissions)=>{
       if(err){
@@ -340,7 +340,7 @@ app.get("/api/leave/admin/getPermission",async (req,res)=>{
   }
 });
 
-app.get("/api/leave", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
