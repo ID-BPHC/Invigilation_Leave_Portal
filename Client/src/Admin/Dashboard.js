@@ -123,7 +123,10 @@ function Dashboard() {
       row.date.map(date => {
         const newRow = {...row}
         newRow.startDate = new Date(date).toLocaleDateString('en-GB')
-        newRow.endDate = new Date(date).toLocaleDateString('en-GB')
+        // newRow.endDate = new Date(date).toLocaleDateString('en-GB')
+        let lastdate = new Date(date)
+        let next_date = new Date(lastdate.getTime() + 86400000);
+        newRow.endDate = next_date.toLocaleDateString('en-GB')
         console.log(newRow)
         printObj.push(newRow)
       })
