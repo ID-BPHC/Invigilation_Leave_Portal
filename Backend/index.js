@@ -46,7 +46,7 @@ app.post("/submit", async (req, res) => {
         if(data != null){
           return;
         }
-        // if new requestew
+        // if new request
         else{
           let phD = await Phd.create({
             name: name,
