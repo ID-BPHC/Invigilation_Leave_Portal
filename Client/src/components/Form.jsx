@@ -145,8 +145,8 @@ export default function Form() {
                 templateClr="blue"
                 selectDateType="multiple"
                 showDateInputField={false}
-                minDate={date.start}
-                maxDate={date.end}
+                minDate="2023-03-12"
+                maxDate="2023-03-18"
               />
             ) : null}
           </div>
