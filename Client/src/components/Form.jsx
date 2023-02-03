@@ -111,7 +111,7 @@ export default function Form() {
               src={require("../img/tdlogo-01.png")}
             ></img>
           </header>
-      <div id="form-fields" style={{marginTop:"-17vh"}}>
+      <div id="form-fields" style={{marginTop:"-8vh"}}>
         <div id="form-heading" className="my-10 text-2xl">
           <h1>
             <strong>Time Table Division Leave Portal</strong>
