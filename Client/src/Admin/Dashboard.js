@@ -132,7 +132,7 @@ function Dashboard() {
       })
     })
     console.log(printObj)
-    setRows(printObj);
+    setRows(response);
   }
 
   useEffect(()=>{
