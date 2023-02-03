@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { REACT_APP_APIURL } from '../config'
 
 export default function Date() {
     const[date,setDate] = useState({
