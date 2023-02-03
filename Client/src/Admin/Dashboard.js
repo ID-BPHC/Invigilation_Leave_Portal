@@ -117,17 +117,19 @@ function Dashboard() {
       },
     });
     response = await response.json();
-    
+    let printObj = [];
     response.map(row => {
-      let [startDate, endDate] = row.date;
-      startDate = new Date(startDate).toLocaleDateString()
-      endDate = new Date(startDate).toLocaleDateString()
-      row.startDate = startDate
-      row.endDate = endDate
       
+      row.date.map(date => {
+        const newRow = {...row}
+        newRow.startDate = new Date(date).toLocaleDateString('en-GB')
+        newRow.endDate = new Date(date).toLocaleDateString('en-GB')
+        console.log(newRow)
+        printObj.push(newRow)
+      })
     })
-    console.log(rows)
-    setRows(response);
+    console.log(printObj)
+    setRows(printObj);
   }
 
   useEffect(()=>{
@@ -174,7 +176,6 @@ function Dashboard() {
         }),
       });
       response = await response.json();
-      console.log(response);
       window.alert(`You Have ${response?"Accepted":"Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
       return;
     }
@@ -184,7 +185,6 @@ function Dashboard() {
   }
 
   const downloadAsExcel = () =>{
-    console.log("printing data");
     const worksheet = XLSX.utils.json_to_sheet(rows);
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook,worksheet,"PHD Data");
@@ -237,8 +237,8 @@ function Dashboard() {
                 <StyledTableCell align="center">Department</StyledTableCell>
                 <StyledTableCell align="center">Requested By</StyledTableCell>
                 <StyledTableCell align="center">Reason</StyledTableCell>
-                <StyledTableCell align="center">Leave Start Date</StyledTableCell>
-                <StyledTableCell align="center">Leave End Date</StyledTableCell>
+                <StyledTableCell align="center">Leave Dates</StyledTableCell>
+                {/* <StyledTableCell align="center">Leave End Date</StyledTableCell> */}
                 <StyledTableCell align="center">Leave Status</StyledTableCell>
                 <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
@@ -251,9 +251,7 @@ function Dashboard() {
                   )
                 : rows
               ).map((row) => {
-                let [startDate, endDate] = row.date;
-                startDate = new Date(startDate).toLocaleDateString()
-                endDate = new Date(startDate).toLocaleDateString()
+
                 return (
                   <TableRow>
   
@@ -267,10 +265,7 @@ function Dashboard() {
                       {row.reason}
                     </TableCell>
                     <TableCell component="th" scope="row" align="center">
-                    {startDate} &nbsp; &nbsp;
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="center">
-                    {endDate} &nbsp; &nbsp;
+                    {row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")} &nbsp; &nbsp;
                     </TableCell>
                     <TableCell component="th" scope="row" align="center">
                       {(row.leave)?"Approved":"Rejected"}
