@@ -24,13 +24,21 @@ export const HOD_Data = [
     text: "Civil Engineering",
     hod: ["murari@hyderabad.bits-pilani.ac.in"],
   },
-  { value: "CSIS", text: "CSIS", hod: ["bhanu@hyderabad.bits-pilani.ac.in"] },
+  { 
+    value: "Computer Science and Information Systems",
+    text: "Computer Science and Information Systems",
+    hod: ["bhanu@hyderabad.bits-pilani.ac.in"]
+  },
   {
     value: "Economics and Finance",
     text: "Economics and Finance",
-    hod: ["f202125887@hyderabad.bits-pilani.ac.in"],
+    hod: ["dushyant@hyderabad.bits-pilani.ac.in"],
   },
-  { value: "EEE", text: "EEE", hod: ["sahoo@hyderabad.bits-pilani.ac.in"] },
+  { 
+    value: "Electrical & Electronics Engineering",
+    text: "Electrical & Electronics Engineering",
+    hod: ["sahoo@hyderabad.bits-pilani.ac.in"]
+  },
   {
     value: "Humanities and Social Sciences",
     text: "Humanities and Social Sciences",
@@ -57,6 +65,3 @@ export const HOD_Data = [
     hod: ["sarmistha.banik@hyderabad.bits-pilani.ac.in"],
   },
 ];
-
-
-
