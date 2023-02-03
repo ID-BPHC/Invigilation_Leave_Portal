@@ -14,7 +14,7 @@ export default function Date() {
       }
     const handleSubmit = async (event)=>{
         event.preventDefault();
-        var response = await fetch("${REACT_APP_APIURL}/api/leave/admin/date", {
+        var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/date`, {
             method: "POST",
             mode: "cors",
             cache: "no-cache",
