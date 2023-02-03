@@ -13,7 +13,7 @@ export default function Date() {
       }
     const handleSubmit = async (event)=>{
         event.preventDefault();
-        var response = await fetch("http://127.0.0.1:5004/api/leave/admin/date", {
+        var response = await fetch("${REACT_APP_APIURL}/api/leave/admin/date", {
             method: "POST",
             mode: "cors",
             cache: "no-cache",
