@@ -117,6 +117,16 @@ function Dashboard() {
       },
     });
     response = await response.json();
+    
+    response.map(row => {
+      let [startDate, endDate] = row.date;
+      startDate = new Date(startDate).toLocaleDateString()
+      endDate = new Date(startDate).toLocaleDateString()
+      row.startDate = startDate
+      row.endDate = endDate
+      
+    })
+    console.log(rows)
     setRows(response);
   }
 
@@ -144,7 +154,7 @@ function Dashboard() {
 
   const[reply,setReply] = useState(0);
   const[email,setEmail] = useState(" ");
-
+// Doubt multiple bookings for HODs
   const handleSubmit = (event) =>{
     event.preventDefault();
     async function ApprovePhd(){
@@ -227,7 +237,8 @@ function Dashboard() {
                 <StyledTableCell align="center">Department</StyledTableCell>
                 <StyledTableCell align="center">Requested By</StyledTableCell>
                 <StyledTableCell align="center">Reason</StyledTableCell>
-                <StyledTableCell align="center">Leave Dates</StyledTableCell>
+                <StyledTableCell align="center">Leave Start Date</StyledTableCell>
+                <StyledTableCell align="center">Leave End Date</StyledTableCell>
                 <StyledTableCell align="center">Leave Status</StyledTableCell>
                 <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
@@ -239,44 +250,52 @@ function Dashboard() {
                     page * rowsPerPage + rowsPerPage
                   )
                 : rows
-              ).map((row) => (
-                <TableRow>
-
-                  <TableCell component="th" scope="row" align="center">
-                    {row.department}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {row.name}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {row.reason}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                  {row.date+ " "} &nbsp; &nbsp;
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {(row.leave)?"Approved":"Rejected"}
-                  </TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    align="center"
-                  >
-                  <form method = "POST" onSubmit = {handleSubmit}>
-                    <div className="flex flex-row items-center justify-center">
-                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={()=>{
-                        setReply(1);
-                        setEmail(row.emailId);
-                      }} type="submit">Approve</button>
-                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name = "deny"  onClick={()=>{
-                        setReply(0);
-                        setEmail(row.emailId);
-                      }} type="submit">Deny</button>
-                    </div>
-                  </form>
-                  </TableCell>
-                </TableRow>
-              ))}
+              ).map((row) => {
+                let [startDate, endDate] = row.date;
+                startDate = new Date(startDate).toLocaleDateString()
+                endDate = new Date(startDate).toLocaleDateString()
+                return (
+                  <TableRow>
+  
+                    <TableCell component="th" scope="row" align="center">
+                      {row.department}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                      {row.name}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                      {row.reason}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                    {startDate} &nbsp; &nbsp;
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                    {endDate} &nbsp; &nbsp;
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                      {(row.leave)?"Approved":"Rejected"}
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      align="center"
+                    >
+                    <form method = "POST" onSubmit = {handleSubmit}>
+                      <div className="flex flex-row items-center justify-center">
+                        <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={()=>{
+                          setReply(1);
+                          setEmail(row.emailId);
+                        }} type="submit">Approve</button>
+                        <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name = "deny"  onClick={()=>{
+                          setReply(0);
+                          setEmail(row.emailId);
+                        }} type="submit">Deny</button>
+                      </div>
+                    </form>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
 
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
