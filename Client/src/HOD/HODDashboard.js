@@ -242,7 +242,7 @@ function Dashboard({ department }) {
                     {row.reason}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                   {row.date ? new Date(row.date).toLocaleDateString() + " " : ""}
+                   {row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")} &nbsp; &nbsp;
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                    {(row.leave)?"Approved":"Rejected"}
