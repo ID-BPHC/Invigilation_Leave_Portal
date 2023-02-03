@@ -104,8 +104,14 @@ export default function Form() {
       id="main-form"
       className="justify-center text-center bg-no-repeat w-full absolute"
     >
-      <image src={require("../img/tdlogo-01.png")} alt="img" width="100px" />
-      <div id="form-fields">
+         <header className=" scale-[0.25] mt-[-5%] ml-[-50%]">
+            <img
+              className="header-img"
+              alt="TD-Logo"
+              src={require("../img/tdlogo-01.png")}
+            ></img>
+          </header>
+      <div id="form-fields" style={{marginTop:"-17vh"}}>
         <div id="form-heading" className="my-10 text-2xl">
           <h1>
             <strong>Time Table Division Leave Portal</strong>
@@ -124,7 +130,8 @@ export default function Form() {
                 for="exampleFormControlTextarea1"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                Reason for Leave, If you have multiple reasons for different dates, please mention them below
+                Reason for Leave, If you have multiple reasons for different dates, please mention them below.
+                <br/><br/>On submitting the form more than once, the latest request will be considered and previous requests would not be considered.
               </label>
               <br />
               <textarea
@@ -230,3 +237,4 @@ export default function Form() {
     </div>
   );
 }
+
