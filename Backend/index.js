@@ -20,7 +20,6 @@ const PORT = process.env.PORT || 5004;
 
 // submit endpoint when user fills the form for leave
 app.post("/submit", async (req, res) => {
-  console.log("efew");
   try {
     const { id, name, email, branch, reason, multipleDate } = req.body;
     let newDates = [];
@@ -35,18 +34,35 @@ app.post("/submit", async (req, res) => {
     //   newDates.push(formattedToday);
     //   console.log(newDates);
     // }
-    let phD = await Phd.create({
-      name: name,
-      department: branch,
-      id: id,
-      campusId: "42131234",
-      phoneNo: 1234567890,
-      emailId: email,
-      leave: false,
-      reason: reason,
-      date: multipleDate,
-    });
-    console.log(phD);
+    Phd.findOneAndUpdate(
+      { emailId: email },
+      { $set: { date:multipleDate,id:id,department:branch,reason:reason} },
+      async (err, data) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        // if phd already exists
+        if(data != null){
+          return;
+        }
+        // if new requestew
+        else{
+          let phD = await Phd.create({
+            name: name,
+            department: branch,
+            id: id,
+            campusId: "42131234",
+            phoneNo: 1234567890,
+            emailId: email,
+            leave: false,
+            reason: reason,
+            date: multipleDate,
+        });
+          console.log(phD);
+        }
+      }
+    );
   } catch (error) {
     console.log(error);
     res.send("Internal Server Error Occured");
@@ -224,8 +240,8 @@ app.post("/admin/response",async (req,res)=>{
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
+        user:"noreplytd@hyderabad.bits-pilani.ac.in",
+        pass: "wzfgpqhlrnwjazdz",
       },
       tls: {
         rejectUnauthorized: false,
@@ -247,7 +263,7 @@ app.post("/admin/response",async (req,res)=>{
         return;
       }
       let mailOptions = {
-        from: "",
+        from: "noreplytd@hyderabad.bits-pilani.ac.in",
         to: email,
         subject: "Invigilation Leave Request",
         context: {
