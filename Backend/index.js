@@ -36,7 +36,7 @@ app.post("/submit", async (req, res) => {
     // }
     Phd.findOneAndUpdate(
       { emailId: email },
-      { $set: { date:multipleDate,id:id,department:branch,reason:reason} },
+      { $set: { date:multipleDate,id:id,department:branch,reason:reason,leave:false,name:name} },
       async (err, data) => {
         if (err) {
           console.log(err);
