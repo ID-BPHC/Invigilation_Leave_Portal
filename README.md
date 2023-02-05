@@ -29,12 +29,12 @@ Now install all the dependencies for Express App
 npm install
 ```
 
-Now start the Backend server at 5000 port 
+Now start the Backend server at 5004 port 
 
 ```bash
 nodemon index.js
 ```
-Navigate to frontend directory and start your React App at 3000 port
+Navigate to frontend directory and start your React App at 3008 port
 
 ```bash
 npm run start
@@ -68,6 +68,8 @@ npm run start
 - The leave status gets updated in the database and as well as reflects in frontend to the Admin.
 - Admin can also ```add HODs``` for each department.
 - Admin can view the list of all HODs.
+- Admin has the option to set start and end date for users to apply for leave.
+- Admin can close student and HOD portal as and when needed.
 
 ## Tech Stack
 
