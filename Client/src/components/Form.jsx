@@ -1,33 +1,22 @@
-import React, { useState, useRef ,useEffect} from "react";
-import { REACT_APP_APIURL } from '../config'
-
+import React, { useState, useRef, useEffect } from "react";
 import "./form.css";
 import Calendar from "react-select-date";
 
-const REGEX = new RegExp(`(H[0-9]{4})|(41[0-3]20[1-2][0-9][0-9]{4})`)
-
+const REGEX = new RegExp(`(H[0-9]{4})|(41[0-3]20[1-2][0-9][0-9]{4})`);
 
 export default function Form() {
-  // const [showDate, setShowDate] = useState(false);
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   const [formData, setFormData] = useState();
   const idRef = useRef();
-  const branchRef = useRef()
+  const branchRef = useRef();
   const [multipleDate, setMultipleDate] = useState();
-  const[date,SetDate] = useState({
-    start:"",
-    end:"",
-  })
-  // const [credentials, setCredentials] = useState({email:"", name:""});
-  // useEffect(()=>{
-  //   const newObj = {
-  //     email: localStorage.getItem('email'),
-  //     name: localStorage.getItem('displayName')
-  //   }
-  //   setCredentials(newObj)
-  // }, [])
+  const [date, SetDate] = useState({
+    start: "",
+    end: "",
+  });
 
-  async function getDates(){
-    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getDate`,{
+  async function getDates() {
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getDate`, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -40,11 +29,14 @@ export default function Form() {
     SetDate(response);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getDates();
-  },[]);
+  }, []);
 
-  async function postData(url = `${REACT_APP_APIURL}/api/leave/submit`, data = {}) {
+  async function postData(
+    url = `${REACT_APP_APIURL}/api/leave/submit`,
+    data = {}
+  ) {
     console.log(data);
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -68,11 +60,11 @@ export default function Form() {
 
   const submitHandler = (event) => {
     if (!REGEX.test(idRef.current.value)) {
-      alert('Please Enter Valid ID')
-      return
+      alert("Please Enter Valid ID");
+      return;
     }
-    const displayName = localStorage.getItem('displayName')
-    const email = localStorage.getItem('email')
+    const displayName = localStorage.getItem("displayName");
+    const email = localStorage.getItem("email");
     event.preventDefault();
     // console.log(showDate);
     let submitData = {
@@ -81,17 +73,16 @@ export default function Form() {
       multipleDate,
       name: displayName,
       email: email,
-      branch: branchRef.current.value
+      branch: branchRef.current.value,
     };
 
     postData(`${REACT_APP_APIURL}/api/leave/submit`, submitData).then((res) =>
       console.log(res)
     );
 
-    alert('Leave Request Submitted!!');
+    alert("Leave Request Submitted!!");
     localStorage.clear();
     window.location.reload();
-
   };
 
   const logout = () => {
@@ -104,14 +95,14 @@ export default function Form() {
       id="main-form"
       className="justify-center text-center bg-no-repeat w-full absolute"
     >
-         <header className=" scale-[0.25] mt-[-5%] ml-[-50%]">
-            <img
-              className="header-img"
-              alt="TD-Logo"
-              src={require("../img/tdlogo-01.png")}
-            ></img>
-          </header>
-      <div id="form-fields" style={{marginTop:"-8vh"}}>
+      <header className=" scale-[0.25] mt-[-5%] ml-[-50%]">
+        <img
+          className="header-img"
+          alt="TD-Logo"
+          src={require("../img/tdlogo-01.png")}
+        ></img>
+      </header>
+      <div id="form-fields" style={{ marginTop: "-8vh" }}>
         <div id="form-heading" className="my-10 text-2xl">
           <h1>
             <strong>Time Table Division Leave Portal</strong>
@@ -121,7 +112,9 @@ export default function Form() {
           className="px-4 max-w-3xl mx-auto space-y-6"
           onSubmit={submitHandler}
         >
-          <h3>Welcome, <strong>{localStorage.getItem("displayName")}</strong></h3>
+          <h3>
+            Welcome, <strong>{localStorage.getItem("displayName")}</strong>
+          </h3>
           <br />
 
           <div className="flex justify-center">
@@ -130,8 +123,12 @@ export default function Form() {
                 for="exampleFormControlTextarea1"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                Reason for Leave, If you have multiple reasons for different dates, please mention them below.
-                <br/><br/>On submitting the form more than once, the latest request will be considered and previous requests would not be considered.
+                Reason for Leave, If you have multiple reasons for different
+                dates, please mention them below.
+                <br />
+                <br />
+                On submitting the form more than once, the latest request will
+                be considered and previous requests would not be considered.
               </label>
               <br />
               <textarea
@@ -158,7 +155,8 @@ export default function Form() {
             ) : null}
           </div>
           <div>
-            Note: ID should be of format <b>41220221234</b> and PSRN should be of the format <b>H0234</b>
+            Note: ID should be of format <b>41220221234</b> and PSRN should be
+            of the format <b>H0234</b>
           </div>
           <div className="flex justify-center">
             <div className="mb-3 xl:w-96 flex flex-row w-full">
@@ -202,7 +200,9 @@ export default function Form() {
               className="inline-flex justify-center text-center rounded-md border m-2 p-4 border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
               ref={branchRef}
             >
-              <option default selected>Biological Sciences</option>
+              <option default selected>
+                Biological Sciences
+              </option>
               <option>Chemical Engineering</option>
               <option>Chemistry</option>
               <option>Civil Engineering</option>
@@ -237,4 +237,3 @@ export default function Form() {
     </div>
   );
 }
-

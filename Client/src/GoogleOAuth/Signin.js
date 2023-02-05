@@ -5,12 +5,10 @@ import Form from "../components/Form";
 import { HOD_Data } from "../Admin/HOD_Data";
 import Admin from "../Admin/Admin";
 import HOD from "../HOD/HOD";
-import { REACT_APP_APIURL } from '../config'
-// import "./signin.css";
 
 function Signin() {
   const [value, setValue] = useState("");
-  const [tempValue,setTempValue] = useState("");
+  const [tempValue, setTempValue] = useState("");
   const handleClick = () => {
     signInWithPopup(auth, provider).then((data) => {
       setValue(data.user.email);
@@ -21,12 +19,13 @@ function Signin() {
     });
   };
 
-  const[accept,setAccept] = useState({
-    student_portal:false,
-    hod_portal:false,
+  const [accept, setAccept] = useState({
+    student_portal: false,
+    hod_portal: false,
   })
-  async function getPermission(){
-    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getPermission`,{
+  async function getPermission() {
+    const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getPermission`, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -46,19 +45,19 @@ function Signin() {
   return (
     <div>
       {value ? (
-        value === "td@hyderabad.bits-pilani.ac.in"? (
+        value === process.env.REACT_APP_ADMIN ? (
           <Admin />
-        ) : HOD_Data.some((i) => i.hod.some((j) => j === value))? ( // needs fix
-        accept.hod_portal === false ?
-          <HOD
-            department={
-              HOD_Data.filter((hod) => hod.hod.some((j) => j === value))[0]
-                .value
-            }
-          /> : <h3 className="text-center justify-center text-3xl flex mt-[25%]" >Hod Portal is Closed </h3>
+        ) : HOD_Data.some((i) => i.hod.some((j) => j === value)) ? ( // needs fix
+          accept.hod_portal === false ?
+            <HOD
+              department={
+                HOD_Data.filter((hod) => hod.hod.some((j) => j === value))[0]
+                  .value
+              }
+            /> : <h3 className="text-center justify-center text-3xl flex mt-[25%]" >Hod Portal is Closed </h3>
         ) : (
-          accept.student_portal === false? 
-          <Form /> : <h3 className="text-center justify-center text-3xl flex mt-[25%]" >Student Portal is Closed</h3>
+          accept.student_portal === false ?
+            <Form /> : <h3 className="text-center justify-center text-3xl flex mt-[25%]" >Student Portal is Closed</h3>
         )
       ) : (
         <div className=" min-h-screen absolute overflow-auto w-full bg-black/5">

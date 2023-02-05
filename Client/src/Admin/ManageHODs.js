@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { HOD_Data } from "./HOD_Data";
 import { useNavigate } from "react-router";
-import {REACT_APP_APIURL} from '../config';
 function ManageHODs({ hodDept, setHodDept }) {
-  
+
   const [credentials, setCredentials] = useState({
     nameOfNewHod: "",
     deptOfNewHod: "",
@@ -14,6 +13,7 @@ function ManageHODs({ hodDept, setHodDept }) {
   let navigate = useNavigate();
 
   const handleSubmit = async (event) => {
+    const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
     event.preventDefault();
     var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/addHod`, {
       method: "POST",
@@ -70,17 +70,17 @@ function ManageHODs({ hodDept, setHodDept }) {
             onChange={onChange}
           >
             <option default selected>Biological Sciences</option>
-              <option>Chemical Engineering</option>
-              <option>Chemistry</option>
-              <option>Civil Engineering</option>
-              <option>Computer Science and Information Systems</option>
-              <option>Economics and Finance</option>
-              <option>Electrical and Electronics Engineering</option>
-              <option>Humanities and Social Sciences</option>
-              <option>Mathematics</option>
-              <option>Mechanical Engineering</option>
-              <option>Pharmacy</option>
-              <option>Physics</option>
+            <option>Chemical Engineering</option>
+            <option>Chemistry</option>
+            <option>Civil Engineering</option>
+            <option>Computer Science and Information Systems</option>
+            <option>Economics and Finance</option>
+            <option>Electrical and Electronics Engineering</option>
+            <option>Humanities and Social Sciences</option>
+            <option>Mathematics</option>
+            <option>Mechanical Engineering</option>
+            <option>Pharmacy</option>
+            <option>Physics</option>
           </select>
 
           <h4 className="my-4">Add Email : </h4>
