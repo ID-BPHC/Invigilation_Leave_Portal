@@ -23,17 +23,6 @@ app.post("/submit", async (req, res) => {
   try {
     const { id, name, email, branch, reason, multipleDate } = req.body;
     let newDates = [];
-    // for (let date of multipleDate) {
-    //   const today = new Date(date);
-    //   const yyyy = today.getFullYear();
-    //   let mm = today.getMonth() + 1; // Months start at 0!
-    //   let dd = today.getDate();
-    //   if (dd < 10) dd = "0" + dd;
-    //   if (mm < 10) mm = "0" + mm;
-    //   const formattedToday = dd.toString() + "/" + mm.toString() + "/" + yyyy.toString();
-    //   newDates.push(formattedToday);
-    //   console.log(newDates);
-    // }
     Phd.findOneAndUpdate(
       { emailId: email },
       { $set: { date:multipleDate,id:id,department:branch,reason:reason,leave:false,name:name} },
@@ -42,24 +31,21 @@ app.post("/submit", async (req, res) => {
           console.log(err);
           return;
         }
-        // if phd already exists
         if(data != null){
           return;
         }
-        // if new request
         else{
           let phD = await Phd.create({
             name: name,
             department: branch,
             id: id,
-            campusId: "42131234",
+            campusId: "12345678",
             phoneNo: 1234567890,
             emailId: email,
             leave: false,
             reason: reason,
             date: multipleDate,
         });
-          console.log(phD);
         }
       }
     );
@@ -240,8 +226,8 @@ app.post("/admin/response",async (req,res)=>{
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user:"noreplytd@hyderabad.bits-pilani.ac.in",
-        pass: "wzfgpqhlrnwjazdz",
+        user:process.env.EMAIL,
+        pass: process.env.PASSWORD,
       },
       tls: {
         rejectUnauthorized: false,
