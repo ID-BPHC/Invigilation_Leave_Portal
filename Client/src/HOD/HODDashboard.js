@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "../Admin/HOD_Data";
-import {REACT_APP_APIURL} from '../config';
-// MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -20,7 +18,6 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-// import { get } from "mongoose";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -101,6 +98,7 @@ TablePaginationActions.propTypes = {
 };
 
 function Dashboard({ department }) {
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
   const [rows, setRows] = useState([]);
 
   async function getListOfPhds() {
@@ -142,13 +140,13 @@ function Dashboard({ department }) {
     setPage(0);
   };
 
-  const[reply,setReply] = useState(0);
-  const[email,setEmail] = useState(" ");
+  const [reply, setReply] = useState(0);
+  const [email, setEmail] = useState(" ");
 
-  const handleSubmit = (event) =>{
+  const handleSubmit = (event) => {
     event.preventDefault();
-    async function ApprovePhd(){
-      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/response`,{
+    async function ApprovePhd() {
+      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/response`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -158,14 +156,14 @@ function Dashboard({ department }) {
         },
         redirect: "follow",
         referrerPolicy: "no-referrer",
-        body:JSON.stringify({
-          reply:reply,
-          email:email,
+        body: JSON.stringify({
+          reply: reply,
+          email: email,
         }),
       });
       response = await response.json();
       console.log(response);
-      window.alert(`You Have ${response?"Accepted":"Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
+      window.alert(`You Have ${response ? "Accepted" : "Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
       return;
     }
     ApprovePhd();
@@ -179,11 +177,12 @@ function Dashboard({ department }) {
         Dashboard
       </div> */}
       <div className="text-center text-3xl mx-auto my-4 text-black">
-        {HOD_Data.map((ele)=>{
-          if(ele.hod.includes(localStorage.getItem("email"))){
+        {HOD_Data.map((ele) => {
+          if (ele.hod.includes(localStorage.getItem("email"))) {
             return (<div>Dept. of {ele.text}</div>);
-          }}
-          )}
+          }
+        }
+        )}
       </div>
       {/* Filter Search for Admin */}
       {localStorage.getItem("email") === HOD_Data[0].value && (
@@ -225,9 +224,9 @@ function Dashboard({ department }) {
             <TableBody>
               {(rowsPerPage > 0
                 ? rows.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
                 : rows
               ).map((row) => (
                 <TableRow>
@@ -242,28 +241,28 @@ function Dashboard({ department }) {
                     {row.reason}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                   {row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")} &nbsp; &nbsp;
+                    {row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")} &nbsp; &nbsp;
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                   {(row.leave)?"Approved":"Rejected"}
+                    {(row.leave) ? "Approved" : "Rejected"}
                   </TableCell>
                   <TableCell
                     component="th"
                     scope="row"
                     align="center"
                   >
-                  <form method = "POST" onSubmit = {handleSubmit}>
-                    <div className="flex flex-row items-center justify-center">
-                      <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={()=>{
-                        setReply(1);
-                        setEmail(row.emailId);
-                      }} type="submit">Approve</button>
-                      <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name = "deny"  onClick={()=>{
-                        setReply(0);
-                        setEmail(row.emailId);
-                      }} type="submit">Deny</button>
-                    </div>
-                  </form>
+                    <form method="POST" onSubmit={handleSubmit}>
+                      <div className="flex flex-row items-center justify-center">
+                        <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={() => {
+                          setReply(1);
+                          setEmail(row.emailId);
+                        }} type="submit">Approve</button>
+                        <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name="deny" onClick={() => {
+                          setReply(0);
+                          setEmail(row.emailId);
+                        }} type="submit">Deny</button>
+                      </div>
+                    </form>
                   </TableCell>
                 </TableRow>
               ))}

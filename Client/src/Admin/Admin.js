@@ -12,7 +12,7 @@ function Admin() {
   return (
     <div>
       <Navbar setSelected={setSelected} />
-      {selected === "Dashboard" ? <Dashboard /> : selected==="ManageHODs" ?<ManageHODs hodDept={hodDept} setHodDept={setHodDept}/>: selected ==="Date"?<Date/>:selected === "Accept"?<Accept/>:<DisplayHODs/>}
+      {selected === "Dashboard" ? <Dashboard /> : selected === "ManageHODs" ? <ManageHODs hodDept={hodDept} setHodDept={setHodDept} /> : selected === "Date" ? <Date /> : selected === "Accept" ? <Accept /> : <DisplayHODs />}
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "./HOD_Data";
-import {REACT_APP_APIURL} from '../config';
-// MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -21,7 +19,6 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 const XLSX = require("xlsx");
-// import { get } from "mongoose";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -104,13 +101,14 @@ TablePaginationActions.propTypes = {
 
 function DisplayHODs() {
 
-  const[rows,setRows] = useState([]);
+  const [rows, setRows] = useState([]);
   const sortedRows = [];
-  var count  = 0;
+  var count = 0;
 
-  useEffect(()=>{
-    async function getListOfHods(){
-      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getAllHods`,{
+  useEffect(() => {
+    async function getListOfHods() {
+      const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getAllHods`, {
         method: "GET",
         mode: "cors",
         cache: "no-cache",
@@ -120,138 +118,138 @@ function DisplayHODs() {
         },
       });
       response = await response.json();
-      if(count == 0){
+      if (count == 0) {
         setArray(response);
         count++;
       }
     }
     getListOfHods();
-  },[]);
+  }, []);
 
-  function setArray(response){
-    for(let i=0;i<response.length;i++){
-      if(response[i].department === "Biological Sciences"){
-          sortedRows.push({
-              name:response[i].name,
-              department:response[i].department,
-              hpsrn:response[i].hpsrn,
-              email:response[i].email,
-          });
+  function setArray(response) {
+    for (let i = 0; i < response.length; i++) {
+      if (response[i].department === "Biological Sciences") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
       }
+    }
+    for (let i = 0; i < response.length; i++) {
+      if (response[i].department === "Chemical Engineering") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Chemistry") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Civil Engineering") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Computer Science and Information Systems") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Electrical and Electronics Engineering") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Humanities and Social Sciences") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Mathematics") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Mechanical Engineering") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Economics and Finance") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Pharmacy") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    for (var i = 0; i < response.length; i++) {
+      if (response[i].department === "Physics") {
+        sortedRows.push({
+          name: response[i].name,
+          department: response[i].department,
+          hpsrn: response[i].hpsrn,
+          email: response[i].email,
+        });
+      }
+    }
+    setRows(sortedRows);
   }
-  for(let i=0;i<response.length;i++){
-    if(response[i].department === "Chemical Engineering"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Chemistry"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Civil Engineering"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Computer Science and Information Systems"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Electrical and Electronics Engineering"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Humanities and Social Sciences"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Mathematics"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Mechanical Engineering"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-  if(response[i].department === "Economics and Finance"){
-      sortedRows.push({
-          name:response[i].name,
-          department:response[i].department,
-          hpsrn:response[i].hpsrn,
-          email:response[i].email,
-      });
-  }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Pharmacy"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-for(var i=0;i<response.length;i++){
-    if(response[i].department === "Physics"){
-        sortedRows.push({
-            name:response[i].name,
-            department:response[i].department,
-            hpsrn:response[i].hpsrn,
-            email:response[i].email,
-        });
-    }
-}
-setRows(sortedRows);
-  }
-  
+
   const [selector, setSelector] = useState("");
 
   const [page, setPage] = React.useState(0);
@@ -270,31 +268,31 @@ setRows(sortedRows);
     setPage(0);
   };
 
-  const downloadAsExcel = () =>{
+  const downloadAsExcel = () => {
     console.log("printing data");
     const worksheet = XLSX.utils.json_to_sheet(rows);
     const workBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workBook,worksheet,"PHD Data");
+    XLSX.utils.book_append_sheet(workBook, worksheet, "PHD Data");
     // Generate Buffer
-    XLSX.write(workBook,{bookType:"xlsx",type:"buffer"});
+    XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     // Binary String
-    XLSX.write(workBook,{bookType:"xlsx",type:"binary"});
-    XLSX.writeFile(workBook,"HOD_Data.xlsx");
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workBook, "HOD_Data.xlsx");
   }
 
   return (
     <div>
       <div className="text-center text-3xl mx-auto my-4 text-black flex">
-        <div style = {{margin:"auto"}}>
+        <div style={{ margin: "auto" }}>
           HODs
         </div>
-        <div style={{fontSize:"1.5rem",marginRight:"3vw"}}>
-        <button onClick = {downloadAsExcel} className="my-2 hover:bg-yellow-200 px-4 border-black border-2 rounded-2xl ">Download</button>
+        <div style={{ fontSize: "1.5rem", marginRight: "3vw" }}>
+          <button onClick={downloadAsExcel} className="my-2 hover:bg-yellow-200 px-4 border-black border-2 rounded-2xl ">Download</button>
         </div>
       </div>
 
       {/* Filter Search for Admin */}
-      { localStorage.getItem('email') === HOD_Data[0].value && <div className="flex flex-row text-center items-center mx-auto ">
+      {localStorage.getItem('email') === HOD_Data[0].value && <div className="flex flex-row text-center items-center mx-auto ">
         {" "}
         <h3 className="mx-4">Sorted By: </h3>
         <select
@@ -313,7 +311,7 @@ setRows(sortedRows);
           ))}
         </select>
       </div>}
-      
+
 
       {/* Table */}
       <div>
@@ -330,9 +328,9 @@ setRows(sortedRows);
             <TableBody>
               {(rowsPerPage > 0
                 ? rows.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
                 : rows
               ).map((row) => (
                 <TableRow>

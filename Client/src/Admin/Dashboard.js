@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { HOD_Data } from "./HOD_Data";
-import {REACT_APP_APIURL} from '../config';
-// MaterialUI Imports for Table
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -21,7 +19,6 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 const XLSX = require("xlsx");
-// import { get } from "mongoose";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -103,11 +100,11 @@ TablePaginationActions.propTypes = {
 };
 
 function Dashboard() {
+  const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+  const [rows, setRows] = useState([]);
 
-  const[rows,setRows] = useState([]);
-
-  async function getListOfPhds(){
-    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/phd`,{
+  async function getListOfPhds() {
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/phd`, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -119,9 +116,9 @@ function Dashboard() {
     response = await response.json();
     let printObj = [];
     response.map(row => {
-      
+
       row.date.map(date => {
-        const newRow = {...row}
+        const newRow = { ...row }
         newRow.startDate = new Date(date).toLocaleDateString('en-GB')
         // newRow.endDate = new Date(date).toLocaleDateString('en-GB')
         let lastdate = new Date(date)
@@ -135,10 +132,10 @@ function Dashboard() {
     setRows(response);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getListOfPhds();
-  },[]);
-  
+  }, []);
+
   const [selector, setSelector] = useState("");
 
   const [page, setPage] = React.useState(0);
@@ -157,13 +154,13 @@ function Dashboard() {
     setPage(0);
   };
 
-  const[reply,setReply] = useState(0);
-  const[email,setEmail] = useState(" ");
-// Doubt multiple bookings for HODs
-  const handleSubmit = (event) =>{
+  const [reply, setReply] = useState(0);
+  const [email, setEmail] = useState(" ");
+  // Doubt multiple bookings for HODs
+  const handleSubmit = (event) => {
     event.preventDefault();
-    async function ApprovePhd(){
-      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/response`,{
+    async function ApprovePhd() {
+      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/response`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -173,13 +170,13 @@ function Dashboard() {
         },
         redirect: "follow",
         referrerPolicy: "no-referrer",
-        body:JSON.stringify({
-          reply:reply,
-          email:email,
+        body: JSON.stringify({
+          reply: reply,
+          email: email,
         }),
       });
       response = await response.json();
-      window.alert(`You Have ${response?"Accepted":"Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
+      window.alert(`You Have ${response ? "Accepted" : "Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
       return;
     }
     ApprovePhd();
@@ -187,30 +184,30 @@ function Dashboard() {
     getListOfPhds();
   }
 
-  const downloadAsExcel = () =>{
+  const downloadAsExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(rows);
     const workBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workBook,worksheet,"PHD Data");
+    XLSX.utils.book_append_sheet(workBook, worksheet, "PHD Data");
     // Generate Buffer
-    XLSX.write(workBook,{bookType:"xlsx",type:"buffer"});
+    XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     // Binary String
-    XLSX.write(workBook,{bookType:"xlsx",type:"binary"});
-    XLSX.writeFile(workBook,"PhD_Leave_Data.xlsx");
+    XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workBook, "PhD_Leave_Data.xlsx");
   }
 
   return (
     <div>
       <div className="text-center text-3xl mx-auto my-4 text-black flex">
-        <div style = {{margin:"auto"}}>
+        <div style={{ margin: "auto" }}>
           Dashboard
         </div>
-        <div style={{fontSize:"1.5rem",marginRight:"3vw"}}>
-        <button onClick = {downloadAsExcel} className="my-2 hover:bg-yellow-200 px-4 border-black border-2 rounded-2xl ">Download</button>
+        <div style={{ fontSize: "1.5rem", marginRight: "3vw" }}>
+          <button onClick={downloadAsExcel} className="my-2 hover:bg-yellow-200 px-4 border-black border-2 rounded-2xl ">Download</button>
         </div>
       </div>
 
       {/* Filter Search for Admin */}
-      { localStorage.getItem('email') === HOD_Data[0].value && <div className="flex flex-row text-center items-center mx-auto ">
+      {localStorage.getItem('email') === HOD_Data[0].value && <div className="flex flex-row text-center items-center mx-auto ">
         {" "}
         <h3 className="mx-4">Sorted By: </h3>
         <select
@@ -229,7 +226,7 @@ function Dashboard() {
           ))}
         </select>
       </div>}
-      
+
 
       {/* Table */}
       <div>
@@ -249,15 +246,15 @@ function Dashboard() {
             <TableBody>
               {(rowsPerPage > 0
                 ? rows.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
                 : rows
               ).map((row) => {
 
                 return (
                   <TableRow>
-  
+
                     <TableCell component="th" scope="row" align="center">
                       {row.department}
                     </TableCell>
@@ -268,28 +265,28 @@ function Dashboard() {
                       {row.reason}
                     </TableCell>
                     <TableCell component="th" scope="row" align="center">
-                    {row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")} &nbsp; &nbsp;
+                      {row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")} &nbsp; &nbsp;
                     </TableCell>
                     <TableCell component="th" scope="row" align="center">
-                      {(row.leave)?"Approved":"Rejected"}
+                      {(row.leave) ? "Approved" : "Rejected"}
                     </TableCell>
                     <TableCell
                       component="th"
                       scope="row"
                       align="center"
                     >
-                    <form method = "POST" onSubmit = {handleSubmit}>
-                      <div className="flex flex-row items-center justify-center">
-                        <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={()=>{
-                          setReply(1);
-                          setEmail(row.emailId);
-                        }} type="submit">Approve</button>
-                        <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name = "deny"  onClick={()=>{
-                          setReply(0);
-                          setEmail(row.emailId);
-                        }} type="submit">Deny</button>
-                      </div>
-                    </form>
+                      <form method="POST" onSubmit={handleSubmit}>
+                        <div className="flex flex-row items-center justify-center">
+                          <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={() => {
+                            setReply(1);
+                            setEmail(row.emailId);
+                          }} type="submit">Approve</button>
+                          <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name="deny" onClick={() => {
+                            setReply(0);
+                            setEmail(row.emailId);
+                          }} type="submit">Deny</button>
+                        </div>
+                      </form>
                     </TableCell>
                   </TableRow>
                 )
