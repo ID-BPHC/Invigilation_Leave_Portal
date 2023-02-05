@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: "td-leave",
   storageBucket: "td-leave.appspot.com",
   messagingSenderId: "907300732555",
-  appId: REACT_APP_APP_ID,
+  appId: process.env.REACT_APP_APP_ID,
   measurementId: "G-VGWWK4DY2M"
 };
 
