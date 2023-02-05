@@ -10,9 +10,11 @@ import { REACT_APP_APIURL } from '../config'
 
 function Signin() {
   const [value, setValue] = useState("");
+  const [tempValue,setTempValue] = useState("");
   const handleClick = () => {
     signInWithPopup(auth, provider).then((data) => {
       setValue(data.user.email);
+      setTempValue(data.user.email);
       localStorage.setItem("displayName", data.user.displayName);
       localStorage.setItem("email", data.user.email);
       localStorage.setItem("photoURL", data.user.photoURL);
@@ -38,7 +40,7 @@ function Signin() {
   }
 
   useEffect(() => {
-    setValue(localStorage.getItem("email"));
+    setValue(tempValue);
     getPermission();
   }, []);
   return (
