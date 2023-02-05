@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
-import { REACT_APP_FIREBASE_API_KEY, REACT_APP_APP_ID } from '../config'
 
 const firebaseConfig = {
-  apiKey: REACT_APP_FIREBASE_API_KEY,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "td-leave.firebaseapp.com",
   projectId: "td-leave",
   storageBucket: "td-leave.appspot.com",
