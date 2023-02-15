@@ -188,7 +188,7 @@ function Dashboard() {
     var newrows = rows;
     newrows.map((row)=>{
       var newRowDate = " ";
-      newRowDate += row.date.map(date => {return new Date(date).toLocaleDateString('en-GB') + ", "});
+      newRowDate += row.date.map(date => {return new Date(date).toLocaleDateString('en-GB') + " "});
       row.date = newRowDate;
     });
     console.log(newrows);
