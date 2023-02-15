@@ -185,7 +185,11 @@ function Dashboard() {
   }
 
   const downloadAsExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const newRows = rows;
+    newRows.map((row)=>{
+      row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")
+    });
+    const worksheet = XLSX.utils.json_to_sheet(newRows);
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook, worksheet, "PHD Data");
     // Generate Buffer
