@@ -187,6 +187,7 @@ function Dashboard() {
   const downloadAsExcel = () => {
     var newrows = rows;
     newrows.map((row)=>{
+      row.date = " ";
       row.date += row.date.map(date => {return new Date(date).toLocaleDateString('en-GB') + ", "})
       
     });
