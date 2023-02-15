@@ -187,9 +187,9 @@ function Dashboard() {
   const downloadAsExcel = () => {
     var newrows = rows;
     newrows.map((row)=>{
-      row.date = " ";
-      row.date += row.date.map(date => {return new Date(date).toLocaleDateString('en-GB') + ", "})
-      
+      var newRowDate = " ";
+      newRowDate += row.date.map(date => {return new Date(date).toLocaleDateString('en-GB') + ", "});
+      row.date = newRowDate;
     });
     console.log(newrows);
     const worksheet = XLSX.utils.json_to_sheet(newrows);
