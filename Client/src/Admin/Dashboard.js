@@ -189,7 +189,7 @@ function Dashboard() {
     var finalRows = [];
     newrows.map((row)=>{
       // var newRowDate = " ";
-      for(var i=0;i<row.date.length();i++){
+      for(var i=0;i<row.date.length;i++){
         var startDate = row.date[i];
         var endDate = startDate.setDate(startDate.getDate()+1);
         startDate = startDate.toLocaleDateString('es-CL');
