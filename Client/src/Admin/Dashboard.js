@@ -186,18 +186,33 @@ function Dashboard() {
 
   const downloadAsExcel = () => {
     var newrows = rows;
+    var finalRows = [];
     newrows.map((row)=>{
-      var newRowDate = " ";
-      newRowDate += row.date.map(date => {return new Date(date).toLocaleDateString('en-GB') + " "});
-      row.date = newRowDate;
+      // var newRowDate = " ";
+      for(var i=0;i<row.date.length();i++){
+        var startDate = row.date[i];
+        var endDate = startDate.setDate(startDate.getDate()+1);
+        startDate = startDate.toLocaleDateString('es-CL');
+        endDate = endDate.toLocaleDateString('es-CL');
+        finalRows.push({
+          name:row.name,
+          department:row.department,
+          id:row.id,
+          emailId:row.emailId,
+          reason:row.reason,
+          start_date:startDate,
+          end_date:endDate,
+          leave:row.leave,
+        });
+      }
+      // newRowDate += row.date.map(date => {return new Date(date).toLocaleDateString('es-CL') + " "});
+      // row.date = newRowDate;
     });
     console.log(newrows);
-    const worksheet = XLSX.utils.json_to_sheet(newrows);
+    const worksheet = XLSX.utils.json_to_sheet(finalRows);
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook, worksheet, "PHD Data");
-    // Generate Buffer
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
-    // Binary String
     XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workBook, "PhD_Leave_Data.xlsx");
   }
