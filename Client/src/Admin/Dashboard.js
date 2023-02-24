@@ -187,8 +187,9 @@ function Dashboard() {
   const downloadAsExcel = () => {
     var newrows = rows;
     var finalRows = [];
-    newrows.map((row)=>{
+    for(var x=0;x<rows.length;x++){
       // var newRowDate = " ";
+      var row = rows[x];
       for(var i=0;i<row.date.length;i++){
         var startDate = row.date[i];
         var endDate = startDate.setDate(startDate.getDate()+1);
@@ -207,7 +208,7 @@ function Dashboard() {
       }
       // newRowDate += row.date.map(date => {return new Date(date).toLocaleDateString('es-CL') + " "});
       // row.date = newRowDate;
-    });
+    }
     console.log(newrows);
     const worksheet = XLSX.utils.json_to_sheet(finalRows);
     const workBook = XLSX.utils.book_new();
