@@ -192,7 +192,7 @@ function Dashboard() {
       for(var i=0;i<row.date.length;i++){
         var startDate = row.date[i];   
         startDate = new Date(startDate);
-        startDate.setDate(startDate.getDate()-1);
+//         startDate.setDate(startDate.getDate()-1);
         var endDate = new Date(startDate);
         endDate.setDate(endDate.getDate()+1);
         startDate = startDate.toLocaleDateString('es-CL');
