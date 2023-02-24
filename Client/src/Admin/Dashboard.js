@@ -189,10 +189,21 @@ function Dashboard() {
     var finalRows = [];
     for(var x=0;x<Newrows.length;x++){
       var row = Newrows[x];
+      if(row.date.length === 0){
+        finalRows.push({
+          Name:row.name,
+          Department:row.department,
+          ID:row.id,
+          EmailId:row.emailId,
+          Reason:row.reason,
+          start_date:" ",
+          end_date:" ",
+          Leave:row.leave,
+        });
+      }
       for(var i=0;i<row.date.length;i++){
         var startDate = row.date[i];   
         startDate = new Date(startDate);
-//         startDate.setDate(startDate.getDate()-1);
         var endDate = new Date(startDate);
         endDate.setDate(endDate.getDate()+1);
         startDate = startDate.toLocaleDateString('es-CL');
