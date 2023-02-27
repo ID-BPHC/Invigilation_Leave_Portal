@@ -32,12 +32,12 @@ export const HOD_Data = [
   {
     value: "Economics and Finance",
     text: "Economics and Finance",
-    hod: ["dushyant@hyderabad.bits-pilani.ac.in"],
+    hod: ["f20212587@hyderabad.bits-pilani.ac.in"],
   },
   {
     value: "Electrical and Electronics Engineering",
     text: "Electrical and Electronics Engineering",
-    hod: ["f20212587@hyderabad.bits-pilani.ac.in"]
+    hod: ["sahoo@hyderabad.bits-pilani.ac.in"]
   },
   {
     value: "Humanities and Social Sciences",
