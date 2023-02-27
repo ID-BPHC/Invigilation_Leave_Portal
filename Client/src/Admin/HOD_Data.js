@@ -37,7 +37,7 @@ export const HOD_Data = [
   {
     value: "Electrical & Electronics Engineering",
     text: "Electrical & Electronics Engineering",
-    hod: ["hod.eee@hyderabad.bits-pilani.ac.in"]
+    hod: ["f20212587@hyderabad.bits-pilani.ac.in"]
   },
   {
     value: "Humanities and Social Sciences",
