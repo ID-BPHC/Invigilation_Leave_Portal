@@ -42,7 +42,7 @@ export const HOD_Data = [
   {
     value: "Humanities and Social Sciences",
     text: "Humanities and Social Sciences",
-    hod: ["hod.hss@hyderabad.bits-pilani.ac.in"],
+    hod: ["f20212587@hyderabad.bits-pilani.ac.in"],
   },
   {
     value: "Mathematics",
