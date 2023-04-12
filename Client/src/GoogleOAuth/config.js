@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: "AIzaSyD_vTZ4BbXeH0r5BsWkO0ZJEcUnyidBZrc",
   authDomain: "td-leave.firebaseapp.com",
   projectId: "td-leave",
   storageBucket: "td-leave.appspot.com",
   messagingSenderId: "907300732555",
-  appId: process.env.REACT_APP_APP_ID,
+  appId: "1:907300732555:web:f4c0ca6ee94bf77c435e8e",
   measurementId: "G-VGWWK4DY2M"
 };
 
