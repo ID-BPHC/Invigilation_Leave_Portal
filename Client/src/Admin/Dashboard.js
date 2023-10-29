@@ -18,6 +18,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import axios from "axios";
 const XLSX = require("xlsx");
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -104,7 +105,9 @@ function Dashboard() {
   const [rows, setRows] = useState([]);
 
   async function getListOfPhds() {
+    // console.log(REACT_APP_APIURL);
     var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/phd`, {
+    // var response = await fetch(`http://127.0.0.1:5004/admin/phd`, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -115,20 +118,19 @@ function Dashboard() {
     });
     response = await response.json();
     let printObj = [];
-    response.map(row => {
-
-      row.date.map(date => {
-        const newRow = { ...row }
-        newRow.startDate = new Date(date).toLocaleDateString('en-GB')
+    response.map((row) => {
+      row.date.map((date) => {
+        const newRow = { ...row };
+        newRow.startDate = new Date(date).toLocaleDateString("en-GB");
         // newRow.endDate = new Date(date).toLocaleDateString('en-GB')
-        let lastdate = new Date(date)
+        let lastdate = new Date(date);
         let next_date = new Date(lastdate.getTime() + 86400000);
-        newRow.endDate = next_date.toLocaleDateString('en-GB')
-        console.log(newRow)
-        printObj.push(newRow)
-      })
-    })
-    console.log(printObj)
+        newRow.endDate = next_date.toLocaleDateString("en-GB");
+        // console.log(newRow)
+        printObj.push(newRow);
+      });
+    });
+    // console.log(printObj)
     setRows(response);
   }
 
@@ -160,7 +162,7 @@ function Dashboard() {
   const handleSubmit = (event) => {
     event.preventDefault();
     async function ApprovePhd() {
-      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/response`, {
+      var response = await fetch(`${REACT_APP_APIURL}/admin/response`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -176,47 +178,51 @@ function Dashboard() {
         }),
       });
       response = await response.json();
-      window.alert(`You Have ${response ? "Accepted" : "Rejected"} the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`);
+      window.alert(
+        `You Have ${
+          response ? "Accepted" : "Rejected"
+        } the leave. Email has been sent successfully. If you want to modify your request, you can hit approve/deny button again`
+      );
       return;
     }
     ApprovePhd();
     getListOfPhds();
     getListOfPhds();
-  }
+  };
 
   const downloadAsExcel = () => {
     var Newrows = rows;
     var finalRows = [];
-    for(var x=0;x<Newrows.length;x++){
+    for (var x = 0; x < Newrows.length; x++) {
       var row = Newrows[x];
-      if(row.date.length === 0){
+      if (row.date.length === 0) {
         finalRows.push({
-          Name:row.name,
-          Department:row.department,
-          ID:row.id,
-          EmailId:row.emailId,
-          Reason:row.reason,
-          start_date:" ",
-          end_date:" ",
-          Leave:row.leave,
+          Name: row.name,
+          Department: row.department,
+          ID: row.id,
+          EmailId: row.emailId,
+          Reason: row.reason,
+          start_date: " ",
+          end_date: " ",
+          Leave: row.leave,
         });
       }
-      for(var i=0;i<row.date.length;i++){
-        var startDate = row.date[i];   
+      for (var i = 0; i < row.date.length; i++) {
+        var startDate = row.date[i];
         startDate = new Date(startDate);
         var endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate()+1);
-        startDate = startDate.toLocaleDateString('es-CL');
-        endDate = endDate.toLocaleDateString('es-CL');
+        endDate.setDate(endDate.getDate() + 1);
+        startDate = startDate.toLocaleDateString("es-CL");
+        endDate = endDate.toLocaleDateString("es-CL");
         finalRows.push({
-          Name:row.name,
-          Department:row.department,
-          ID:row.id,
-          EmailId:row.emailId,
-          Reason:row.reason,
-          start_date:startDate,
-          end_date:endDate,
-          Leave:row.leave,
+          Name: row.name,
+          Department: row.department,
+          ID: row.id,
+          EmailId: row.emailId,
+          Reason: row.reason,
+          start_date: startDate,
+          end_date: endDate,
+          Leave: row.leave,
         });
       }
     }
@@ -226,40 +232,90 @@ function Dashboard() {
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workBook, "PhD_Leave_Data.xlsx");
-  }
+  };
+
+  const deleteAll = async () => {
+    try {
+      // Make a DELETE request to the API endpoint to delete all PhD student records
+      const response = await axios.delete('http://localhost:5004/admin/phd'); // Replace with your server's URL
+
+      if (response.status === 200) {
+        alert('All PhD student records deleted successfully.');
+      } else {
+        alert('An error occurred while deleting all PhD records.');
+      }
+    } catch (error) {
+      alert('An error occurred:', error);
+    }
+
+    getListOfPhds();
+  };
+
+  const deleteSpecificPhd = async (email) => {
+    try {
+      // Replace with the actual API endpoint URL
+      const apiUrl = `http://localhost:5004/admin/phd/${email}`; // Update with your server's URL
+
+      // Send a DELETE request using axios
+      const response = await axios.delete(apiUrl);
+
+      if (response.status === 200) {
+        alert(`PhD student data with email ${email} was deleted successfully.`);
+        // You can add code to update your UI or state after a successful delete.
+      } else if (response.status === 404) {
+        alert(`PhD student with email ${email} was not found.`);
+      } else {
+        alert("An error occurred while deleting the data.");
+      }
+    } catch (error) {
+      alert("An error occurred while making the DELETE request:", error);
+    }
+
+    getListOfPhds();
+  };
 
   return (
     <div>
       <div className="text-center text-3xl mx-auto my-4 text-black flex">
-        <div style={{ margin: "auto" }}>
-          Dashboard
-        </div>
+        <div style={{ margin: "auto" }}>Dashboard</div>
         <div style={{ fontSize: "1.5rem", marginRight: "3vw" }}>
-          <button onClick={downloadAsExcel} className="my-2 hover:bg-yellow-200 px-4 border-black border-2 rounded-2xl ">Download</button>
+          <button
+            onClick={downloadAsExcel}
+            className="my-2 mr-2 hover:bg-yellow-200 px-4 border-black border-2 rounded-2xl "
+          >
+            Download
+          </button>
+          <button
+            onClick={deleteAll}
+            className="my-2 hover:bg-red-200 px-4 border-black border-2 rounded-2xl "
+          >
+            Delete All
+          </button>
         </div>
       </div>
 
       {/* Filter Search for Admin */}
-      {localStorage.getItem('email') === HOD_Data[0].value && <div className="flex flex-row text-center items-center mx-auto ">
-        {" "}
-        <h3 className="mx-4">Sorted By: </h3>
-        <select
-          defaultValue={HOD_Data[0].value}
-          value={selector}
-          className="text-center items-center w-40 overflow-auto flex my-5 bg-slate-300 p-4 rounded-xl right-0 flex-grow-0"
-          required
-          onChange={(e) => {
-            setSelector(e.target.text);
-          }}
-        >
-          {HOD_Data.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.text}
-            </option>
-          ))}
-        </select>
-      </div>}
-
+      {localStorage.getItem("email") === HOD_Data[0].value && (
+        <div className="flex flex-row text-center items-center mx-auto ">
+          {" "}
+          <h3 className="mx-4">Sorted By: </h3>
+          <select
+            defaultValue={HOD_Data[0].value}
+            value={selector}
+            className="text-center items-center w-40 overflow-auto flex my-5 bg-slate-300 p-4 rounded-xl right-0 flex-grow-0"
+            required
+            onChange={(e) => {
+              setSelector(e.target.text);
+            }}
+          >
+            {HOD_Data.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.text}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Table */}
       <div>
@@ -279,15 +335,13 @@ function Dashboard() {
             <TableBody>
               {(rowsPerPage > 0
                 ? rows.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
                 : rows
               ).map((row) => {
-
                 return (
                   <TableRow>
-
                     <TableCell component="th" scope="row" align="center">
                       {row.department}
                     </TableCell>
@@ -298,31 +352,56 @@ function Dashboard() {
                       {row.reason}
                     </TableCell>
                     <TableCell component="th" scope="row" align="center">
-                      {row.date.map(date => new Date(date).toLocaleDateString('en-GB') + ", ")} &nbsp; &nbsp;
+                      {row.date.map(
+                        (date) =>
+                          new Date(date).toLocaleDateString("en-GB") + ", "
+                      )}{" "}
+                      &nbsp; &nbsp;
                     </TableCell>
                     <TableCell component="th" scope="row" align="center">
-                      {(row.leave) ? "Approved" : "Rejected"}
+                      {row.leave === true ? "Approved" : row.leave === false ? "Rejected" : "Pending"}
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      align="center"
-                    >
+                    <TableCell component="th" scope="row" align="center">
+                      <div className="flex flex-row ">
                       <form method="POST" onSubmit={handleSubmit}>
                         <div className="flex flex-row items-center justify-center">
-                          <button className="mx-4 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md" name="approve" onClick={() => {
-                            setReply(1);
-                            setEmail(row.emailId);
-                          }} type="submit">Approve</button>
-                          <button className="mx-4 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md" name="deny" onClick={() => {
-                            setReply(0);
-                            setEmail(row.emailId);
-                          }} type="submit">Deny</button>
+                          <button
+                            className="mx-2 hover:bg-green-400 border-black border-2 px-3 py-2 rounded-md"
+                            name="approve"
+                            onClick={() => {
+                              setReply(1);
+                              setEmail(row.emailId);
+                            }}
+                            type="submit"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            className="mx-2 hover:bg-yellow-400 border-black border-2 px-3 py-2 rounded-md"
+                            name="deny"
+                            onClick={() => {
+                              setReply(0);
+                              setEmail(row.emailId);
+                            }}
+                            type="submit"
+                          >
+                            Deny
+                          </button>
                         </div>
                       </form>
+                      <button
+                        className="mx-2 hover:bg-red-400 border-black border-2 px-3 py-2 rounded-md"
+                        name="delete"
+                        onClick={() => {
+                          deleteSpecificPhd(row.emailId);
+                        }}
+                        // type="submit"
+                      >
+                        Delete
+                      </button></div>
                     </TableCell>
                   </TableRow>
-                )
+                );
               })}
 
               {emptyRows > 0 && (
