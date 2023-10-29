@@ -237,7 +237,7 @@ function Dashboard() {
   const deleteAll = async () => {
     try {
       // Make a DELETE request to the API endpoint to delete all PhD student records
-      const response = await axios.delete('http://localhost:5004/admin/phd'); // Replace with your server's URL
+      const response = await axios.delete(`${REACT_APP_APIURL}/api/leave/admin/phd`); // Replace with your server's URL
 
       if (response.status === 200) {
         alert('All PhD student records deleted successfully.');
@@ -254,7 +254,7 @@ function Dashboard() {
   const deleteSpecificPhd = async (email) => {
     try {
       // Replace with the actual API endpoint URL
-      const apiUrl = `http://localhost:5004/admin/phd/${email}`; // Update with your server's URL
+      const apiUrl = `${REACT_APP_APIURL}/api/leave/admin/phd/${email}`; // Update with your server's URL
 
       // Send a DELETE request using axios
       const response = await axios.delete(apiUrl);
