@@ -162,7 +162,7 @@ function Dashboard() {
   const handleSubmit = (event) => {
     event.preventDefault();
     async function ApprovePhd() {
-      var response = await fetch(`${REACT_APP_APIURL}/admin/response`, {
+      var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/response`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
