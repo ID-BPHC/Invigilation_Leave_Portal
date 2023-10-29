@@ -34,10 +34,11 @@ export default function Form() {
   }, []);
 
   async function postData(
+    // url = `http://127.0.0.1:5004/submit`,
     url = `${REACT_APP_APIURL}/api/leave/submit`,
     data = {}
   ) {
-    console.log(data);
+    // console.log(data);
     const response = await fetch(url, {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -55,7 +56,7 @@ export default function Form() {
 
   const inputChangeHandler = (e, i) => {
     setFormData((prev) => e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const submitHandler = (event) => {
@@ -121,14 +122,9 @@ export default function Form() {
             <div className="mb-3 xl:w-96">
               <label
                 for="exampleFormControlTextarea1"
-                className="form-label inline-block mb-2 text-gray-700"
+                className="form-label inline-block mb-2 text-gray-700 font-bold"
               >
-                Reason for Leave, If you have multiple reasons for different
-                dates, please mention them below.
-                <br />
-                <br />
-                On submitting the form more than once, the latest request will
-                be considered and previous requests would not be considered.
+                Reason for Leave:
               </label>
               <br />
               <textarea
@@ -139,9 +135,18 @@ export default function Form() {
                 required
                 onChange={(e) => inputChangeHandler(e, 1)}
               ></textarea>
+              <br />
+
             </div>
           </div>
-
+          <label className=" text-red-500 text-sm">
+            ** Note: If you have multiple reasons for different dates, please
+            mention them accordingly. <br/>If you submit the form multiple times, only the
+            most recent request will be taken into consideration, and any
+            previous requests will not be reviewed.
+          </label>
+          <br/>
+          <br/>
           <div className="flex justify-center">
             {true ? (
               <Calendar
@@ -151,6 +156,7 @@ export default function Form() {
                 showDateInputField={false}
                 minDate={date.start}
                 maxDate={date.end}
+                required
               />
             ) : null}
           </div>
