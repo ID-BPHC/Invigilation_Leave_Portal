@@ -261,12 +261,13 @@ app.post("/admin/response", async (req, res) => {
       let mailOptions = {
         from: "noreplytd@hyderabad.bits-pilani.ac.in",
         to: email,
-        subject: "Invigilation Leave Request",
+        subject: reply ? "Leave Request Approved" : "Leave Request Denied",
         context: {
-          title: "Invigilation Leave",
+          title: "Invigilation Leave Request",
           email: email,
           name: phd[0].name,
           reply: reply ? "Approved" : "Rejected",
+          dates: phd[0].date.join(', '),
           url: process.env.BASEURL,
         },
         template: "index",
@@ -275,15 +276,15 @@ app.post("/admin/response", async (req, res) => {
       if (true) {
         transporter.sendMail(mailOptions, (err, success) => {
           if (err) {
-            // console.log(err);
+            console.log(err);
           }
-          // console.log("Email sent successfully!!");
+          console.log("Email sent successfully!!");
         });
       }
     });
     return res.send(reply ? true : false);
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     res.send("Internal Server Error Occured");
   }
 });

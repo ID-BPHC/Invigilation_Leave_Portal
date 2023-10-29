@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Leave Portal</title>
-        <style>
-            input{
-                border: none;
-                padding: 15px 32px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 14px;
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body>
-        <h3 style="color:black;">{{title}}</h3>
-        <p style="color: black;">{{text}}</p>
-             Dear {{name}},
-                <br>
-                <h4>
-                     Your leave request has been {{reply}}. 
-                </h4>
-                <br>
-                <br>
-                <div style="color: red;">
-                Note: Please do not reply directly to this e-mail. This e-mail was sent from a notification-only address that cannot accept incoming e-mail.
-                </div>
-    </body>
+<head>
+    <title>Leave Portal</title>
+    <style>
+        input{
+            border: none;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    {{!-- <h3 style="color: black;">{{title}}</h3> --}}
+    <p style="color: black;">{{text}}</p>
+    <p>Dear {{name}},</p>
+    <p>
+        Your leave request for the following dates has been {{reply}} by your department head. Please make note of the same.
+    </p>
+    <p>Dates:</p>
+    <p> 
+        {{#each dates}}
+            {{this}}<br>
+        {{/each}}
+    </p>
+    <br>
+    <p>
+        Regards,
+        <br>
+        TimeTable Division
+        <br>
+        Birla Institute of Technology and Science, Pilani
+        <br>
+        Hyderabad Campus
+        <br>
+        Jawahar Nagar, Kapra Mandal
+        <br>
+        Hyderabad 500 078, Telangana, India
+        <br>
+        Phone: +91-40 66303802
+        <br>
+        Email: timetable@hyderabad.bits-pilani.ac.in
+    </p>
+    <br>
+    <div style="color: red;">
+        Note: Please do not reply directly to this e-mail. This e-mail was sent from a notification-only address that cannot accept incoming e-mail.
+    </div>
+</body>
 </html>
-
