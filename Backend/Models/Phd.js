@@ -36,6 +36,7 @@ const phdSchema = new mongoose.Schema({
     },
     leave:{
         type:Boolean,
+        default: null,
     }
 });
 
