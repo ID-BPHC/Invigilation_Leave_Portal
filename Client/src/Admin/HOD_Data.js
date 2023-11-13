@@ -7,7 +7,7 @@ export const HOD_Data = [
   {
     value: "Biological Sciences",
     text: "Biological Sciences",
-    hod: ["sangan@hyderabad.bits-pilani.ac.in"],
+    hod: [""],
   },
   {
     value: "Chemical Engineering",

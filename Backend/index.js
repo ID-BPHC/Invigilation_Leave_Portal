@@ -199,9 +199,8 @@ app.post("/admin/changeHod", async (req, res) => {
 // admin endpoint to add the new hod to db
 app.post("/admin/addHod", async (req, res) => {
   try {
-    const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } =
-      req.body;
-    // console.log(req.body);
+    const { nameOfNewHod, deptOfNewHod, hpsrnOfNewHod, emailOfNewHod } = req.body;
+   
     let hod = await Hod.create({
       name: nameOfNewHod,
       department: deptOfNewHod,
@@ -209,13 +208,37 @@ app.post("/admin/addHod", async (req, res) => {
       email: emailOfNewHod,
     });
     // console.log(hod);
-    return res.send(true);
+    res.send(hod)
+    next()
   } catch (err) {
     // console.log(err);
     res.send("Internal Server Error Occured");
     return res.send(false);
   }
 });
+
+
+// admin endpoint to delete an hod from db
+app.delete("/admin/hod/:email", (req, res) => {
+  const email = req.params.email;
+  // Use Mongoose to find and remove the HOD student record from MongoDB
+  Hod.findOneAndRemove({ email: email }, (err, hod) => {
+    if (err) {
+      // Handle the error (e.g., send an error response)
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    if (!hod) {
+      // HOD student record not found, send a not found response
+      return res.status(404).json({ message: "HOD not found" });
+    }
+
+    // Successfully deleted, send a success response
+    return res.status(200).json({ message: hod });
+  });
+});
+
+
 
 // admin endpoint to approve/reject the leave of phd student
 app.post("/admin/response", async (req, res) => {
@@ -227,7 +250,6 @@ app.post("/admin/response", async (req, res) => {
       { $set: { leave: reply ? true : false } },
       (err, data) => {
         if (err) {
-          // console.log(err);
           return;
         }
       }

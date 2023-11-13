@@ -280,6 +280,23 @@ function DisplayHODs() {
     XLSX.writeFile(workBook, "HOD_Data.xlsx");
   }
 
+  // send a delete request to backend at admin/hod/email
+  async function deleteHod(email) {
+    const REACT_APP_APIURL = process.env.REACT_APP_APIURL;
+    var response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/hod/${email}`, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    response = await response.json();
+    console.log(response);
+    window.location.reload();
+  }
+  
   return (
     <div>
       <div className="text-center text-3xl mx-auto my-4 text-black flex">
@@ -323,6 +340,7 @@ function DisplayHODs() {
                 <StyledTableCell align="center">Name</StyledTableCell>
                 <StyledTableCell align="center">HPSRN</StyledTableCell>
                 <StyledTableCell align="center">Email</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -345,6 +363,9 @@ function DisplayHODs() {
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     {row.email}
+                  </TableCell>
+                  <TableCell component="th" scope="row" align="center">
+                    <button className="my-1 hover:bg-red-200 py-2 px-2 border-black border-2 rounded-2xl" onClick={() => deleteHod(row.email)}>Delete</button>
                   </TableCell>
                 </TableRow>
               ))}
