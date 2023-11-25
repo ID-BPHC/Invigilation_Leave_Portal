@@ -20,7 +20,7 @@ export default function Accept() {
     event.preventDefault();
 
     try {
-      const response = await fetch(`${REACT_APP_APIURL}/admin/permission`, {
+      const response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/permission`, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -38,7 +38,7 @@ export default function Accept() {
       const data = await response.json();
 
       window.alert(
-        `${accept.student_portal ? "Student Portal is currently OPEN" : "Student Portal is currently CLOSED"} and ${accept.hod_portal ? "HOD Portal is currently OPEN" : "HOD Portal is currently CLOSED"
+        `${accept.student_portal ? "Student Portal is currently CLOSED" : "Student Portal is currently OPEN"} and ${accept.hod_portal ? "HOD Portal is currently CLOSED" : "HOD Portal is currently OPEN"
         }`
       );
 
@@ -50,7 +50,7 @@ export default function Accept() {
 
   async function getPermission() {
     try {
-      const response = await fetch(`${REACT_APP_APIURL}/admin/getPermission`, {
+      const response = await fetch(`${REACT_APP_APIURL}/api/leave/admin/getPermission`, {
         method: "GET",
         mode: "cors",
         cache: "no-cache",
@@ -105,24 +105,24 @@ export default function Accept() {
     <>
       <div className="text-center items-center mx-auto flex flex-col my-4">
         <h4 className="my-4">
-          {value1.student_portal ? "Student Portal is Open" : "Student Portal is Closed"}
+          {value1.student_portal ? "Student Portal is Closed" : "Student Portal is Open"}
         </h4>
         <button
-          className={`mx-4 h-12 rounded-md w-1/4 p-4 text-center border ${value1.student_portal ? "border-red-500 text-white bg-red-500" : "border-green-500 text-white bg-green-500"
+          className={`mx-4 h-12 rounded-md w-1/4 p-4 text-center border ${value1.student_portal ? "border-red-500 text-white bg-green-500" : "border-green-500 text-white bg-red-500"
             }`}
           onClick={toggleStudentPortal}
         >
-          {value1.student_portal ? "Click to Close" : "Click to Open"}
+          {value1.student_portal ? "Click to Open" : "Click to Close"}
         </button>
         <h4 className="my-4">
-          {value1.hod_portal ? "HOD Portal is Open" : "HOD Portal is Closed"}
+          {value1.hod_portal ? "HOD Portal is Closed" : "HOD Portal is Open"}
         </h4>
         <button
-          className={`mx-4 h-12 rounded-md w-1/4 p-4 text-center border ${value1.hod_portal ? "border-red-500 text-white bg-red-500" : "border-green-500 text-white bg-green-500"
+          className={`mx-4 h-12 rounded-md w-1/4 p-4 text-center border ${value1.hod_portal ? "border-red-500 text-white bg-green-500" : "border-green-500 text-white bg-red-500"
             }`}
           onClick={toggleHODPortal}
         >
-          {value1.hod_portal ? "Click to Close" : "Click to Open"}
+          {value1.hod_portal ? "Click to Open" : "Click to Close"}
         </button>
         <button
           className="my-6 hover:bg-yellow-200 px-4 py-3 border-black border-2 rounded-3xl"
