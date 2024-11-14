@@ -9,7 +9,7 @@ export default function Form() {
   const [formData, setFormData] = useState();
   const idRef = useRef();
   const branchRef = useRef();
-  const [multipleDate, setMultipleDate] = useState();
+  const [multipleDate, setMultipleDate] = useState([]);
   const [date, SetDate] = useState({
     start: "",
     end: "",
@@ -34,40 +34,48 @@ export default function Form() {
   }, []);
 
   async function postData(
-    // url = `http://127.0.0.1:5004/submit`,
     url = `${REACT_APP_APIURL}/api/leave/submit`,
     data = {}
   ) {
-    // console.log(data);
     const response = await fetch(url, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
       },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response.json();
   }
 
-  const inputChangeHandler = (e, i) => {
-    setFormData((prev) => e.target.value);
-    // console.log(e.target.value);
+  const inputChangeHandler = (e) => {
+    setFormData(e.target.value);
+  };
+
+  const handleDateSelection = (dates) => {
+    setMultipleDate(dates);
   };
 
   const submitHandler = (event) => {
+    event.preventDefault();
+
+    if (multipleDate.length > 4) {
+      alert("You can only apply for a maximum of 4 days leave.");
+      return;
+    }
+
     if (!REGEX.test(idRef.current.value)) {
       alert("Please Enter Valid ID");
       return;
     }
+
     const displayName = localStorage.getItem("displayName");
     const email = localStorage.getItem("email");
-    event.preventDefault();
-    // console.log(showDate);
+
     let submitData = {
       reason: formData,
       id: idRef.current.value,
@@ -121,7 +129,7 @@ export default function Form() {
           <div className="flex justify-center">
             <div className="mb-3 xl:w-96">
               <label
-                for="exampleFormControlTextarea1"
+                htmlFor="exampleFormControlTextarea1"
                 className="form-label inline-block mb-2 text-gray-700 font-bold"
               >
                 Reason for Leave:
@@ -133,32 +141,30 @@ export default function Form() {
                 id="exampleFormControlTextarea1"
                 rows="3"
                 required
-                onChange={(e) => inputChangeHandler(e, 1)}
+                onChange={inputChangeHandler}
               ></textarea>
               <br />
-
             </div>
           </div>
-          <label className=" text-red-500 text-sm">
+          <label className="text-red-500 text-sm">
             ** Note: If you have multiple reasons for different dates, please
-            mention them accordingly. <br/>If you submit the form multiple times, only the
-            most recent request will be taken into consideration, and any
-            previous requests will not be reviewed.
+            mention them accordingly. You can only apply for a maximum of 4 days leave.<br />
+            If you submit the form multiple times, only the most recent request
+            will be taken into consideration, and any previous requests will not
+            be reviewed.
           </label>
-          <br/>
-          <br/>
+          <br />
+          <br />
           <div className="flex justify-center">
-            {true ? (
-              <Calendar
-                onSelect={(date) => setMultipleDate(date)}
-                templateClr="blue"
-                selectDateType="multiple"
-                showDateInputField={false}
-                minDate={date.start}
-                maxDate={date.end}
-                required
-              />
-            ) : null}
+            <Calendar
+              onSelect={handleDateSelection}
+              templateClr="blue"
+              selectDateType="multiple"
+              showDateInputField={false}
+              minDate={date.start}
+              maxDate={date.end}
+              required
+            />
           </div>
           <div>
             Note: ID should be of format <b>41220221234</b> and PSRN should be
@@ -167,7 +173,7 @@ export default function Form() {
           <div className="flex justify-center">
             <div className="mb-3 xl:w-96 flex flex-row w-full">
               <label
-                for="exampleFormControlInput1"
+                htmlFor="exampleFormControlInput1"
                 className="form-label inline-block p-4 text-gray-700"
               >
                 ID/PSRN:
@@ -175,24 +181,7 @@ export default function Form() {
               <input
                 type="text"
                 name="id"
-                placeholder=""
-                className="
-                  form-control
-                  block
-                  px-3
-                  w-4/5
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                "
+                className="form-control block px-3 w-4/5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="exampleFormControlInput1"
                 ref={idRef}
                 required
@@ -206,9 +195,7 @@ export default function Form() {
               className="inline-flex justify-center text-center rounded-md border m-2 p-4 border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
               ref={branchRef}
             >
-              <option default selected>
-                Biological Sciences
-              </option>
+              <option defaultValue>Biological Sciences</option>
               <option>Chemical Engineering</option>
               <option>Chemistry</option>
               <option>Civil Engineering</option>
