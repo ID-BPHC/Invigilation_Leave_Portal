@@ -207,6 +207,7 @@ export default function Form() {
               <option>Mechanical Engineering</option>
               <option>Pharmacy</option>
               <option>Physics</option>
+              <option>General</option>
             </select>
           </div>
           <div className="flex flex-row justify-center align-middle text-center my-5">
