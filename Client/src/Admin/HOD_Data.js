@@ -5,6 +5,11 @@ export const HOD_Data = [
   //   hod: ["td@hyderabad.bits-pilani.ac.in"],
   // },
   {
+    value: "General",
+    text: "General",
+    hod: [""],
+  },
+  {
     value: "Biological Sciences",
     text: "Biological Sciences",
     hod: [""],

@@ -45,7 +45,7 @@ function Signin() {
   return (
     <div>
       {value ? (
-        value === process.env.REACT_APP_ADMIN ? (
+        value === process.env.REACT_APP_ADMIN || value === process.env.REACT_APP_DEV_ADMIN ? (
           <Admin />
         ) : HOD_Data.some((i) => i.hod.some((j) => j === value)) ? ( // needs fix
           accept.hod_portal === false ?
