@@ -195,7 +195,8 @@ export default function Form() {
               className="inline-flex justify-center text-center rounded-md border m-2 p-4 border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
               ref={branchRef}
             >
-              <option defaultValue>Biological Sciences</option>
+              <option defaultValue>Department</option>
+              <option>Biological Sciences</option>
               <option>Chemical Engineering</option>
               <option>Chemistry</option>
               <option>Civil Engineering</option>
@@ -207,7 +208,6 @@ export default function Form() {
               <option>Mechanical Engineering</option>
               <option>Pharmacy</option>
               <option>Physics</option>
-              <option>General</option>
             </select>
           </div>
           <div className="flex flex-row justify-center align-middle text-center my-5">
