@@ -1,12 +1,7 @@
 export const HOD_Data = [
-  // {
-  //   value: "admin",
-  //   text: "-- Select Dept --",
-  //   hod: ["td@hyderabad.bits-pilani.ac.in"],
-  // },
   {
-    value: "General",
-    text: "General",
+    value: "Department",
+    text: "Department",
     hod: ["timetable@hyderabad.bits-pilani.ac.in"],
   },
   {
